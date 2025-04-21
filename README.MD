@@ -49,5 +49,5 @@ Sinta-se livre para usá-lo, estudá-lo e modificá-lo!
 
 ---
 
-👤Feito por **Carlos Eduardo**
+👤 Feito por **Carlos Eduardo**
 [Me adicione no LinkedIn](https://www.linkedin.com/in/carlos-eduardo-408087230)

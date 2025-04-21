@@ -86,6 +86,7 @@ body * {
 #switch button:active {
   transform: translate(0, -50%) scale(0.95);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  outline: 8px solid var(--highlight-color);
 }
 
 .light #switch button {
@@ -94,6 +95,10 @@ body * {
 
 .light #switch button:active {
   transform: translate(32px, -50%) scale(0.95);
+}
+
+#switch button :hover {
+outline: 8px solid var(--highlight-color);
 }
 
 #switch span {
