@@ -36,7 +36,7 @@ O Projeto da Rocket, é um projeto para ilustrar meu oortifolio e melhorar minha
 
 ## 🔖 Layout
 
-Você pode visualizar o layout do projeto através [DESSE LINK](https://www.figma.com/file/MF894dzM99Fg9Ssu4KyMq/DevLinks-(Copy)?node-id=1%3A113&t=8x94o7ecTaQMC2CS-1/duplicate). É necessário ter conta no [Figma](https://figma.com) para acessá-lo.
+Você pode visualizar o layout do projeto através [DESSE LINK](www.figma.com/design/XtMkdFQ32NWs2FjxYIlhfK/DevLinks-•-Projeto-Discover--Community-?node-id=1437-191&t=Mqmf55grN8BHLgJf-0/duplicate). É necessário ter conta no [Figma](https://figma.com) para acessá-lo.
 
 ## :memo: Licença
 
