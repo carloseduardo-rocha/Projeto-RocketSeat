@@ -49,9 +49,5 @@ Sinta-se livre para usá-lo, estudá-lo e modificá-lo!
 
 ---
 
-<<<<<<< HEAD
-👤Feito por **Carlos Eduardo**  
-=======
-+👤Feito por **Carlos Eduardo**  
->>>>>>> aa1b60c362bc11e44d997a454ec001e78c6d82a1
+👤Feito por **Carlos Eduardo**
 [Me adicione no LinkedIn](https://www.linkedin.com/in/carlos-eduardo-408087230)
