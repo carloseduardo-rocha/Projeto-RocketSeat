@@ -1,7 +1,7 @@
-<h1 align="center"> Projeto-RocketSeat </h1>
+<h1 align="center">🚀 Projeto Discover - Rocketseat</h1>
 
 <p align="center">
-Progama exclusivo e gratuito, promovido pela Rocketseat para ensino de tecnologias WEB.
+  Programa exclusivo e gratuito promovido pela <strong>Rocketseat</strong> para o ensino de tecnologias web.
 </p>
 
 <p align="center">
@@ -18,30 +18,36 @@ Progama exclusivo e gratuito, promovido pela Rocketseat para ensino de tecnologi
 <br>
 
 <p align="center">
-  <img alt="Projeto Discover-RocketSeat" src=".github/preview.jpg" width="100%">
+  <img alt="Preview do projeto Discover" src=".github/preview.jpg" width="100%">
 </p>
-
-## 🚀 Tecnologias
-
-Esse projeto foi desenvolvido com as seguintes tecnologias:
-
-- HTML e CSS
-- JavaScript
-- Git e Github
-- Figma
-
-## 💻 Projeto
-
-O Projeto da Rocket, é um projeto para ilustrar meu oortifolio e melhorar minha visibilidade como progamador.
-
-## 🔖 Layout
-
-Você pode visualizar o layout do projeto através [DESSE LINK](www.figma.com/design/XtMkdFQ32NWs2FjxYIlhfK/DevLinks-•-Projeto-Discover--Community-?node-id=1437-191&t=Mqmf55grN8BHLgJf-0/duplicate). É necessário ter conta no [Figma](https://figma.com) para acessá-lo.
-
-## :memo: Licença
-
-Esse projeto está sob a licença MIT.
 
 ---
 
-Feito com ♥ by Carlos Eduardo
+## 🚧 Projeto
+
+O **Projeto Discover** faz parte de uma trilha educacional da Rocketseat.  
+Foi criado com o objetivo de melhorar minhas habilidades em desenvolvimento web e fortalecer meu portfólio como programador.
+
+---
+
+## 🧪 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+- ✅ HTML5
+- ✅ CSS3
+- ✅ JavaScript
+- ✅ Git & GitHub
+- ✅ Figma (Design)
+
+---
+
+## :memo: Licença
+
+Este projeto está sob a licença **MIT**.  
+Sinta-se livre para usá-lo, estudá-lo e modificá-lo!
+
+---
+
+Feito com 💙 por **Carlos Eduardo**  
+[Me adicione no LinkedIn](https://www.linkedin.com/in/carlos-eduardo-408087230)
