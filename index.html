@@ -1,69 +1,124 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="">
+<html lang="pt-br">
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> Projetos - CaduDev 👨‍💻</title>
-    <link rel="icon" href="./assets/full-moon.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <canvas id="particles"></canvas>
-    <div id="container">
-      <div id="profile">
-        <img src="./assets/avatar.png" alt="Foto de Carlos Eduardo, sorrindo, com barba, cabelo amarrado, no Senac."/>
-        <p>@cadurochhaa</p>
-      </div>
 
-      <div id="switch" onclick="toggleMode()">
-        <button></button>
+    <title>Projetos - CaduDev 👨‍💻</title>
+    <link rel="icon" href="./assets/full-moon.png" type="image/png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- Background Particles -->
+    <canvas id="particles"></canvas>
+
+    <main id="container">
+      <!-- Profile -->
+      <section id="profile">
+        <img
+          src="./assets/avatar.png"
+          alt="Foto de Carlos Eduardo, sorrindo, com barba e cabelo amarrado."
+        />
+        <p>@cadurochhaa</p>
+      </section>
+
+      <!-- Theme Switch -->
+      <div id="switch">
+        <button aria-label="Alternar tema"></button>
         <span></span>
       </div>
 
-      <ul>
-        <li>
-          <a href="https://linkedin.com/in/carlos-eduardo-408087230" target="_blank">Veja meu Linkedln</a>
-        </li>
-        <li>
-          <a href="https://github.com/carloseduardo-rocha" target="_blank">Conheça meu GitHub</a>
-        </li>
-        <li>
-          <a href="./assets/Curriculo-Carlos_Eduardo.pdf" target="_blank">Veja meu Currículo</a>
-        </li>
-        <li>
-          <a href="https://wa.me/5585991799221?text=Olá,%20vi%20seu%20portfólio%20e%20gostaria%20de%20entrar%20em%20contato!" target="_blank"> Entre em contato comigo </a>
-        </li>
-      </ul>
+      <!-- Links -->
+      <nav>
+        <ul>
+          <li>
+            <a
+              href="https://linkedin.com/in/carlos-eduardo-408087230"
+              target="_blank"
+              rel="noopener"
+            >
+              Veja meu LinkedIn
+            </a>
+          </li>
 
-      <div id="social-links">
+          <li>
+            <a
+              href="https://github.com/carloseduardo-rocha"
+              target="_blank"
+              rel="noopener"
+            >
+              Conheça meu GitHub
+            </a>
+          </li>
+
+          <li>
+            <a href="./assets/Curriculo-Carlos_Eduardo.pdf" target="_blank">
+              Veja meu Currículo
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://wa.me/5585991799221?text=Olá,%20vi%20seu%20portfólio%20e%20gostaria%20de%20entrar%20em%20contato!"
+              target="_blank"
+              rel="noopener"
+            >
+              Entre em contato comigo
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Game -->
+      <section class="game-section">
+        <h2>Mini Game — Snake 🐍</h2>
+        <canvas id="snakeGame" aria-label="Jogo Snake"></canvas>
+        <p>Pontuação: <span id="score">0</span></p>
+      </section>
+
+      <!-- Social -->
+      <section id="social-links" aria-label="Redes sociais">
         <a href="https://github.com/carloseduardo-rocha" target="_blank">
-        <ion-icon name="logo-github"></ion-icon>
+          <ion-icon name="logo-github"></ion-icon>
         </a>
 
         <a href="https://www.instagram.com/cadurochhaa/" target="_blank">
-        <ion-icon name="logo-instagram"></ion-icon>
+          <ion-icon name="logo-instagram"></ion-icon>
         </a>
 
-        <a href="https://linkedin.com/in/carlos-eduardo-408087230" target="_blank">
-        <ion-icon name="logo-linkedin"></ion-icon>
+        <a
+          href="https://linkedin.com/in/carlos-eduardo-408087230"
+          target="_blank"
+        >
+          <ion-icon name="logo-linkedin"></ion-icon>
         </a>
+      </section>
 
-      </div>
+      <!-- Footer -->
+      <footer>👨‍💻 Feito por Carlos Eduardo</footer>
+    </main>
 
-      <footer>
-        👨‍💻 Feito por Carlos Eduardo. 
-      </footer>
+    <!-- Icons -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
 
-    </div>
-    </div>
-
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+    <!-- Main Script -->
     <script src="./script.js"></script>
   </body>
 </html>

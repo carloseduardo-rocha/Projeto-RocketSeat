@@ -1,4 +1,32 @@
 let particleColor = "rgba(0, 255, 255, 0.7)"
+let targetParticleColor = particleColor
+
+const savedTheme = localStorage.getItem("theme")
+if (savedTheme === "light") {
+  document.documentElement.classList.add("light")
+  particleColor = "rgba(0, 0, 0, 0.4)"
+  targetParticleColor = particleColor
+}
+
+/* =========================
+   MOUSE INTERACTION
+========================= */
+
+const mouse = {
+  x: null,
+  y: null,
+  radius: 120,
+}
+
+window.addEventListener("mousemove", (e) => {
+  mouse.x = e.x
+  mouse.y = e.y
+})
+
+/* =========================
+   PARTICLES
+========================= */
+
 const canvas = document.getElementById("particles")
 const ctx = canvas.getContext("2d")
 
@@ -12,13 +40,29 @@ class Particle {
     this.x = Math.random() * canvas.width
     this.y = Math.random() * canvas.height
     this.size = Math.random() * 2 + 1
-    this.speedX = Math.random() * 1 - 0.5
-    this.speedY = Math.random() * 1 - 0.5
+    this.speedX = Math.random() - 0.5
+    this.speedY = Math.random() - 0.5
   }
 
   update() {
     this.x += this.speedX
     this.y += this.speedY
+
+    if (mouse.x && mouse.y) {
+      const dx = this.x - mouse.x
+      const dy = this.y - mouse.y
+      const distance = Math.sqrt(dx * dx + dy * dy)
+
+      if (distance < mouse.radius) {
+        this.x += dx / 10
+        this.y += dy / 10
+      }
+    }
+
+    if (this.x < 0) this.x = canvas.width
+    if (this.x > canvas.width) this.x = 0
+    if (this.y < 0) this.y = canvas.height
+    if (this.y > canvas.height) this.y = 0
   }
 
   draw() {
@@ -38,10 +82,15 @@ function initParticles() {
 
 function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  particlesArray.forEach((particle) => {
-    particle.update()
-    particle.draw()
+
+  // smooth color transition
+  particleColor = targetParticleColor
+
+  particlesArray.forEach((p) => {
+    p.update()
+    p.draw()
   })
+
   requestAnimationFrame(animateParticles)
 }
 
@@ -54,57 +103,96 @@ window.addEventListener("resize", () => {
 initParticles()
 animateParticles()
 
+/* =========================
+   THEME TOGGLE
+========================= */
+
 function toggleMode() {
   const html = document.documentElement
   const img = document.querySelector("#profile img")
+
   html.classList.toggle("light")
 
   if (html.classList.contains("light")) {
-    img.setAttribute("src", "./assets/avatar-light.png")
-    particleColor = "rgba(0, 0, 0, 0.4)"
-    img.setAttribute(
-      "alt",
-      "Foto de Carlos Eduardo, com barba, cabelo solto, na empresa Alares."
-    )
+    img.src = "./assets/avatar-light.png"
+    targetParticleColor = "rgba(0, 0, 0, 0.4)"
+    localStorage.setItem("theme", "light")
   } else {
-    img.setAttribute("src", "./assets/avatar.png")
-    particleColor = "rgba(0, 255, 255, 0.7)"
-    img.setAttribute(
-      "alt",
-      "Foto de Carlos Eduardo, sorrindo, com barba, cabelo amarrado, no Senac."
-    )
+    img.src = "./assets/avatar.png"
+    targetParticleColor = "rgba(0, 255, 255, 0.7)"
+    localStorage.setItem("theme", "dark")
   }
 }
+
+/* =========================
+   SNAKE GAME
+========================= */
 
 const gameCanvas = document.getElementById("snakeGame")
 const gameCtx = gameCanvas.getContext("2d")
 
+gameCanvas.width = 300
+gameCanvas.height = 300
+
 const box = 15
 let snake = [{ x: 9 * box, y: 9 * box }]
 let direction = "RIGHT"
-let food = {
-  x: Math.floor(Math.random() * 20) * box,
-  y: Math.floor(Math.random() * 20) * box,
-}
+let food = generateFood()
 let score = 0
+let gameRunning = true
+let gameLoop
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP"
-  if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN"
-  if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT"
-  if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT"
+function generateFood() {
+  return {
+    x: Math.floor(Math.random() * 20) * box,
+    y: Math.floor(Math.random() * 20) * box,
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!gameRunning && e.key === "Enter") {
+    resetGame()
+    return
+  }
+
+  if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP"
+  if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN"
+  if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT"
+  if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT"
 })
 
 function drawGame() {
-  gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height)
+  if (!gameRunning) return
+
+  // bottom
+  gameCtx.fillStyle = "#0b1220"
+  gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height)
+
+  // edge
+  gameCtx.strokeStyle = "#00ffff"
+  gameCtx.lineWidth = 2
+  gameCtx.strokeRect(0, 0, gameCanvas.width, gameCanvas.height)
 
   snake.forEach((segment, index) => {
     gameCtx.fillStyle = index === 0 ? "#00ffff" : "#ffffff"
-    gameCtx.fillRect(segment.x, segment.y, box, box)
+    gameCtx.beginPath()
+    gameCtx.roundRect(segment.x, segment.y, box, box, 4)
+    gameCtx.fill()
+
+    if (index === 0) {
+      gameCtx.fillStyle = "#000"
+      gameCtx.beginPath()
+      gameCtx.arc(segment.x + 4, segment.y + 4, 2, 0, Math.PI * 2)
+      gameCtx.arc(segment.x + 10, segment.y + 4, 2, 0, Math.PI * 2)
+      gameCtx.fill()
+    }
   })
 
-  gameCtx.fillStyle = "red"
-  gameCtx.fillRect(food.x, food.y, box, box)
+  // food
+  gameCtx.fillStyle = "#ff4757"
+  gameCtx.beginPath()
+  gameCtx.arc(food.x + box / 2, food.y + box / 2, box / 2 - 2, 0, Math.PI * 2)
+  gameCtx.fill()
 
   let headX = snake[0].x
   let headY = snake[0].y
@@ -114,17 +202,6 @@ function drawGame() {
   if (direction === "LEFT") headX -= box
   if (direction === "RIGHT") headX += box
 
-  if (headX === food.x && headY === food.y) {
-    score++
-    document.getElementById("score").innerText = score
-    food = {
-      x: Math.floor(Math.random() * 20) * box,
-      y: Math.floor(Math.random() * 20) * box,
-    }
-  } else {
-    snake.pop()
-  }
-
   const newHead = { x: headX, y: headY }
 
   if (
@@ -132,17 +209,62 @@ function drawGame() {
     headY < 0 ||
     headX >= gameCanvas.width ||
     headY >= gameCanvas.height ||
-    snake.some((segment) => segment.x === newHead.x && segment.y === newHead.y)
+    snake.some((s) => s.x === newHead.x && s.y === newHead.y)
   ) {
-    alert("Game Over!")
-    snake = [{ x: 9 * box, y: 9 * box }]
-    direction = "RIGHT"
-    score = 0
-    document.getElementById("score").innerText = score
+    endGame()
     return
   }
 
   snake.unshift(newHead)
+
+  if (headX === food.x && headY === food.y) {
+    score++
+    document.getElementById("score").innerText = score
+    food = generateFood()
+
+    particlesArray.forEach((p) => {
+      p.speedX *= 1.5
+      p.speedY *= 1.5
+    })
+
+    setTimeout(() => {
+      particlesArray.forEach((p) => {
+        p.speedX *= 0.7
+        p.speedY *= 0.7
+      })
+    }, 300)
+  } else {
+    snake.pop()
+  }
 }
 
-setInterval(drawGame, 120)
+function endGame() {
+  gameRunning = false
+  clearInterval(gameLoop)
+
+  gameCtx.fillStyle = "rgba(0,0,0,0.7)"
+  gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height)
+
+  gameCtx.fillStyle = "#00ffff"
+  gameCtx.font = "20px Inter"
+  gameCtx.textAlign = "center"
+  gameCtx.fillText("Game Over", 150, 130)
+
+  gameCtx.font = "14px Inter"
+  gameCtx.fillText("Pressione ENTER", 150, 160)
+}
+
+function resetGame() {
+  snake = [{ x: 9 * box, y: 9 * box }]
+  direction = "RIGHT"
+  score = 0
+  document.getElementById("score").innerText = score
+  food = generateFood()
+  gameRunning = true
+  gameLoop = setInterval(drawGame, 120)
+}
+
+gameLoop = setInterval(drawGame, 120)
+const switchButton = document.querySelector("#switch")
+
+switchButton.addEventListener("click", toggleMode)
