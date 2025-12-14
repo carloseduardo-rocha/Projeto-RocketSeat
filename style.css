@@ -183,10 +183,12 @@ ul li a:hover {
 
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .game-section h2 {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 300;
   margin-bottom: 12px;
   text-align: center;
@@ -200,7 +202,15 @@ ul li a:hover {
 
   display: block;
   margin: 0 auto;
-  border-radius: 8px;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+#snakeGame:hover {
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.7);
+  transform: scale(1.02);
 }
 
 /* ==========================
