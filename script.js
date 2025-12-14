@@ -131,12 +131,29 @@ function toggleMode() {
 const gameCanvas = document.getElementById("snakeGame")
 const gameCtx = gameCanvas.getContext("2d")
 
-gameCanvas.width = 300
-gameCanvas.height = 300
+function resizeGameCanvas() {
+  const container = document.querySelector("#container")
+  const size = Math.min(container.clientWidth, 420)
 
-const box = 15
+  gameCanvas.width = size
+  gameCanvas.height = size
+}
+
+resizeGameCanvas()
+window.addEventListener("resize", resizeGameCanvas)
+
+let box
+
+function updateBoxSize() {
+  box = Math.floor(gameCanvas.width / 20)
+}
+
+updateBoxSize()
+window.addEventListener("resize", updateBoxSize)
+
 let snake = [{ x: 9 * box, y: 9 * box }]
 let direction = "RIGHT"
+let nextDirection = direction
 let food = generateFood()
 let score = 0
 let gameRunning = true
@@ -150,19 +167,27 @@ function generateFood() {
 }
 
 document.addEventListener("keydown", (e) => {
+  const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]
+
+  if (keys.includes(e.key)) {
+    e.preventDefault()
+  }
+
   if (!gameRunning && e.key === "Enter") {
     resetGame()
     return
   }
 
-  if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP"
-  if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN"
-  if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT"
-  if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT"
+  if (e.key === "ArrowUp" && direction !== "DOWN") nextDirection = "UP"
+  if (e.key === "ArrowDown" && direction !== "UP") nextDirection = "DOWN"
+  if (e.key === "ArrowLeft" && direction !== "RIGHT") nextDirection = "LEFT"
+  if (e.key === "ArrowRight" && direction !== "LEFT") nextDirection = "RIGHT"
 })
 
 function drawGame() {
   if (!gameRunning) return
+
+  direction = nextDirection
 
   // bottom
   gameCtx.fillStyle = "#0b1220"
