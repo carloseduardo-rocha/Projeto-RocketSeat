@@ -1,3 +1,4 @@
+let particleColor = "rgba(0, 255, 255, 0.7)"
 const canvas = document.getElementById("particles")
 const ctx = canvas.getContext("2d")
 
@@ -21,7 +22,7 @@ class Particle {
   }
 
   draw() {
-    ctx.fillStyle = "rgba(0, 255, 255, 0.7)"
+    ctx.fillStyle = particleColor
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
     ctx.fill()
@@ -60,12 +61,14 @@ function toggleMode() {
 
   if (html.classList.contains("light")) {
     img.setAttribute("src", "./assets/avatar-light.png")
+    particleColor = "rgba(0, 0, 0, 0.4)"
     img.setAttribute(
       "alt",
       "Foto de Carlos Eduardo, com barba, cabelo solto, na empresa Alares."
     )
   } else {
     img.setAttribute("src", "./assets/avatar.png")
+    particleColor = "rgba(0, 255, 255, 0.7)"
     img.setAttribute(
       "alt",
       "Foto de Carlos Eduardo, sorrindo, com barba, cabelo amarrado, no Senac."
