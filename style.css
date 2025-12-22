@@ -246,3 +246,119 @@ footer {
     --bg-url: url(./assets/bg-desktop-light.jpg);
   }
 }
+
+/* ==========================
+   PROJECTS
+========================== */
+.projects-section {
+  margin-top: 40px;
+  padding: 16px;
+
+  background: var(--surface-color);
+  border: 1px solid var(--stroke-color);
+  border-radius: 12px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.projects-section h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.project-card {
+  text-decoration: none;
+  position: relative;
+  padding: 16px;
+
+  background: var(--surface-color);
+  border: 1px solid var(--stroke-color);
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.project-card h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.project-card p {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--text-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Desktop */
+@media (min-width: 700px) {
+  .projects-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.projects-section h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Highlight main project */
+.project-card.highlight {
+  position: relative;
+  border-color: #00ffff;
+  box-shadow: 0 0 0 transparent;
+}
+
+.project-card.highlight:hover {
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.35);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.project-card h3 {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.project-card .badge {
+  font-size: 9px;
+  padding: 3px 8px;
+
+  background: rgba(0, 255, 255, 0.15);
+  color: #00ffff;
+
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  border-radius: 999px;
+
+  white-space: nowrap;
+}

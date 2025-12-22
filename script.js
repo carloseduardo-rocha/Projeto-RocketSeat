@@ -254,8 +254,8 @@ function drawGame() {
 
     setTimeout(() => {
       particlesArray.forEach((p) => {
-        p.speedX *= 0.7
-        p.speedY *= 0.7
+        p.speedX *= 0.5
+        p.speedY *= 0.5
       })
     }, 300)
   } else {
