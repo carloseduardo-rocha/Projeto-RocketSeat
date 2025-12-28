@@ -1,3 +1,6 @@
+/* ===========================================
+   RESET & GLOBAL STYLES
+=========================================== */
 * {
   margin: 0;
   padding: 0;
@@ -20,6 +23,10 @@ footer p, .projects-subtitle, .game-instructions {
   user-select: text;
   -webkit-user-select: text;
 }
+
+/* ===========================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+=========================================== */
 
 /* Dark Theme Variables (Default) */
 :root {
@@ -208,42 +215,21 @@ body {
 }
 
 /* ===========================================
-   THEME SWITCH - CORRIGIDO
+   THEME TOGGLE SWITCH
 =========================================== */
+
 #switch {
   position: relative;
   width: var(--switch-track-width);
-  height: var(--switch-button-size); /* Altura igual ao botão */
+  height: var(--switch-button-size);
   margin: 1rem auto;
-  z-index: 10000;
-  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Real button (invisible but clickable) */
-#theme-toggle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  z-index: 10002;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  -webkit-appearance: none;
-  appearance: none;
-  user-select: none !important;
-  -webkit-user-drag: none !important;
-}
-
-/* Track (background bar) - Centralizado verticalmente */
-#switch span {
+/* Track (background bar) */
+#switch .switch-track {
   display: block;
   width: var(--switch-track-width);
   height: var(--switch-track-height);
@@ -251,35 +237,73 @@ body {
   border: 1px solid var(--stroke-color);
   backdrop-filter: blur(4px);
   border-radius: 9999px;
-  transition: background 0.3s;
   position: absolute;
   top: 50%;
   left: 0;
   transform: translateY(-50%);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  opacity: 0.8;
 }
 
-/* Visual button (moving circle with effects) - Agora centralizado */
-.switch-button {
+/* Button with elegant gradient */
+#theme-toggle {
   position: absolute;
   width: var(--switch-button-size);
   height: var(--switch-button-size);
-  background: white;
-  border: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  top: 50%; /* CENTRALIZADO VERTICALMENTE */
+  top: 50%;
   left: 0;
   z-index: 10001;
   transform: translateY(-50%);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(0, 255, 255, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8);
   cursor: pointer;
   animation: pulse 2s infinite;
-  transition: left 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
 }
 
+/* Inner glow effect */
+#theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 240, 240, 0.7) 100%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Light mode - warm colored button */
+.light #theme-toggle {
+  background: linear-gradient(135deg, #ffd166 0%, #ffb347 100%);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.15),
+    0 0 20px rgba(255, 177, 71, 0.5),
+    inset 0 2px 4px rgba(255, 255, 255, 0.9);
+}
+
+.light #theme-toggle::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 240, 220, 0.8) 100%);
+}
+
+/* Icon (emoji) - with better contrast */
 .switch-icon {
   font-size: 16px;
   line-height: 1;
@@ -288,60 +312,102 @@ body {
   justify-content: center;
   width: 100%;
   height: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+  z-index: 2;
+  position: relative;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Dark mode - emoji with blue glow */
+.switch-icon {
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+/* Light mode - emoji with golden glow */
+.light .switch-icon {
+  text-shadow: 0 0 8px rgba(255, 177, 71, 0.6);
 }
 
 /* ========== VISUAL EFFECTS ========== */
 
-/* Hover effect (glow) */
-#switch:hover .switch-button {
+/* Hover - increased glow effect */
+#theme-toggle:hover {
   outline: 8px solid var(--highlight-color);
   outline-offset: 2px;
   animation: none;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.25),
+    0 0 30px rgba(0, 255, 255, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.9);
 }
 
-/* Active effect (press) */
-#theme-toggle:active ~ .switch-button {
-  transform: translateY(-50%) scale(0.95);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+.light #theme-toggle:hover {
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(255, 177, 71, 0.7),
+    inset 0 2px 4px rgba(255, 255, 255, 0.95);
+}
+
+/* Active (pressed) */
+#theme-toggle:active {
+  transform: translateY(-50%) scale(0.92);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(0, 255, 255, 0.4),
+    inset 0 1px 3px rgba(255, 255, 255, 0.7);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.light #theme-toggle:active {
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    0 0 15px rgba(255, 177, 71, 0.4),
+    inset 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 
 /* Light mode position */
-.light .switch-button {
+.light #theme-toggle {
   left: calc(var(--switch-track-width) - var(--switch-button-size));
-}
-
-.light #theme-toggle:active ~ .switch-button {
-  transform: translate(calc(var(--switch-track-width) - var(--switch-button-size)), -50%) scale(0.95);
 }
 
 /* ========== PULSE ANIMATIONS ========== */
 @keyframes pulse {
   0%, 100% {
     box-shadow: 
-      0 4px 10px rgba(0, 0, 0, 0.2),
-      0 0 10px rgba(0, 255, 255, 0.3);
+      0 4px 15px rgba(0, 0, 0, 0.2),
+      0 0 20px rgba(0, 255, 255, 0.4),
+      inset 0 2px 4px rgba(255, 255, 255, 0.8);
   }
   50% {
     box-shadow: 
-      0 4px 15px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(0, 255, 255, 0.5);
+      0 4px 20px rgba(0, 0, 0, 0.25),
+      0 0 30px rgba(0, 255, 255, 0.6),
+      inset 0 2px 4px rgba(255, 255, 255, 0.9);
   }
 }
 
 @keyframes pulse-light {
   0%, 100% {
     box-shadow: 
-      0 4px 10px rgba(0, 0, 0, 0.2),
-      0 0 10px rgba(37, 99, 235, 0.3);
+      0 4px 15px rgba(0, 0, 0, 0.15),
+      0 0 20px rgba(255, 177, 71, 0.5),
+      inset 0 2px 4px rgba(255, 255, 255, 0.9);
   }
   50% {
     box-shadow: 
-      0 4px 15px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(37, 99, 235, 0.5);
+      0 4px 20px rgba(0, 0, 0, 0.18),
+      0 0 30px rgba(255, 177, 71, 0.7),
+      inset 0 2px 4px rgba(255, 255, 255, 0.95);
   }
 }
 
-.light .switch-button {
+#theme-toggle {
+  animation: pulse 2s infinite;
+}
+
+.light #theme-toggle {
   animation: pulse-light 2s infinite;
 }
 
@@ -463,6 +529,7 @@ nav ul {
   overflow: hidden;
 }
 
+/* Diagonal gradient overlay */
 .projects-section::after {
   content: '';
   position: absolute;
@@ -511,6 +578,7 @@ nav ul {
   overflow: hidden;
 }
 
+/* Moving gradient effect on hover */
 .project-card::after {
   content: '';
   position: absolute;
@@ -809,6 +877,7 @@ nav ul {
   overflow: hidden;
 }
 
+/* Radial gradient effect on hover */
 #social-links a::before {
   content: '';
   position: absolute;
@@ -867,7 +936,7 @@ footer p {
 }
 
 /* ===========================================
-   RESPONSIVE DESIGN - CORRIGIDO
+   RESPONSIVE DESIGN
 =========================================== */
 
 /* Desktop styles (min-width: 700px) */
@@ -890,9 +959,9 @@ footer p {
     gap: 2rem;
   }
 
-  /* CORREÇÃO CRÍTICA: Projetos em 2 colunas */
+  /* Projects in 2 columns */
   .projects-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .skills-grid {

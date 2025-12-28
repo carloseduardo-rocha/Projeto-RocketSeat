@@ -1,6 +1,6 @@
-/* =========================
-   GENERAL CONFIGURATION
-========================= */
+/* ===========================================
+   GLOBAL CONFIGURATION & CONSTANTS
+=========================================== */
 
 // Snake game theme settings
 const snakeTheme = {
@@ -35,11 +35,11 @@ let currentSnakeTheme = document.documentElement.classList.contains("light")
 let particleColor = "rgba(0, 255, 255, 0.7)"
 let targetParticleColor = particleColor
 
-/* =========================
+/* ===========================================
    PARTICLE SYSTEM
-========================= */
+=========================================== */
 
-// Mouse tracking
+// Mouse tracking for particle interaction
 const mouse = {
   x: null,
   y: null,
@@ -56,7 +56,7 @@ window.addEventListener("mousemove", (e) => {
 const canvas = document.getElementById("particles")
 const ctx = canvas.getContext("2d")
 
-// Resize particles canvas
+// Resize particles canvas to fit window
 function resizeParticlesCanvas() {
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
@@ -66,7 +66,7 @@ function resizeParticlesCanvas() {
 resizeParticlesCanvas()
 window.addEventListener("resize", resizeParticlesCanvas)
 
-// Particles array
+// Particles array and count
 let particlesArray = []
 const PARTICLE_COUNT = 100
 
@@ -88,7 +88,7 @@ class Particle {
     this.x += this.speedX
     this.y += this.speedY
 
-    // Mouse interaction
+    // Mouse interaction - particles react to mouse proximity
     if (mouse.x !== null && mouse.y !== null) {
       const dx = this.x - mouse.x
       const dy = this.y - mouse.y
@@ -100,7 +100,7 @@ class Particle {
       }
     }
 
-    // Border wrap-around
+    // Border wrap-around (infinite canvas effect)
     if (this.x < 0) this.x = canvas.width
     if (this.x > canvas.width) this.x = 0
     if (this.y < 0) this.y = canvas.height
@@ -115,7 +115,7 @@ class Particle {
   }
 }
 
-// Initialize particles
+// Initialize particles array
 function initParticles() {
   particlesArray = []
   for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -140,18 +140,18 @@ function animateParticles() {
 initParticles()
 animateParticles()
 
-/* =========================
+/* ===========================================
    THEME SYSTEM
-========================= */
+=========================================== */
 
 // Toggle theme function
 function toggleMode() {
   const html = document.documentElement
   const img = document.querySelector("#profile img")
-  const switchIcon = document.querySelector(".switch-icon")
+  const switchIcon = document.querySelector("#theme-toggle .switch-icon")
   const themeInfo = document.getElementById("theme-info")
 
-  // Toggle class
+  // Toggle light/dark class
   html.classList.toggle("light")
 
   // Apply light theme settings
@@ -181,12 +181,12 @@ function toggleMode() {
   if (gameState === "gameover") endGame()
 }
 
-// Initialize saved theme
+// Initialize saved theme from localStorage
 function initTheme() {
   const savedTheme = localStorage.getItem("theme")
   const html = document.documentElement
   const img = document.querySelector("#profile img")
-  const switchIcon = document.querySelector(".switch-icon")
+  const switchIcon = document.querySelector("#theme-toggle .switch-icon")
   const themeInfo = document.getElementById("theme-info")
 
   if (savedTheme === "light") {
@@ -196,6 +196,8 @@ function initTheme() {
     if (switchIcon) switchIcon.textContent = "☀️"
     if (themeInfo) themeInfo.textContent = "Theme: Light"
   } else {
+    // Ensure dark mode is active
+    html.classList.remove("light")
     if (switchIcon) switchIcon.textContent = "🌙"
     if (themeInfo) themeInfo.textContent = "Theme: Dark"
   }
@@ -205,9 +207,9 @@ function initTheme() {
     : snakeTheme.dark
 }
 
-/* =========================
+/* ===========================================
    SNAKE GAME
-========================= */
+=========================================== */
 
 // Game canvas setup
 const gameCanvas = document.getElementById("snakeGame")
@@ -215,10 +217,10 @@ const gameCtx = gameCanvas.getContext("2d")
 
 // Game constants
 const GRID_SIZE = 20
-const GAME_SPEED = 120
-let box
+const GAME_SPEED = 120 // milliseconds between updates
+let box // Size of each grid cell
 
-// Resize game canvas
+// Resize game canvas to fit container
 function resizeGameCanvas() {
   const container = document.querySelector("#container")
   const size = Math.min(container.clientWidth, 420)
@@ -228,11 +230,11 @@ function resizeGameCanvas() {
   box = Math.floor(gameCanvas.width / GRID_SIZE)
 }
 
-// Resize listener
+// Resize listener for responsive game
 window.addEventListener("resize", resizeGameCanvas)
 resizeGameCanvas()
 
-// Game state
+// Game state variables
 let snake = []
 let direction = "RIGHT"
 let nextDirection = "RIGHT"
@@ -242,7 +244,7 @@ let highScore = Number(localStorage.getItem("snakeHighScore")) || 0
 let gameState = "idle" // "idle", "running", "paused", "gameover"
 let gameLoop = null
 
-// Visual effects
+// Visual effects variables
 let flashTimer = 0
 let foodPulse = 0
 let foodRing = 0
@@ -255,7 +257,7 @@ function generateFood() {
   }
 }
 
-// Reset game
+// Reset game to initial state
 function resetGame(start = false) {
   // Reset snake state
   snake = [{ x: 9 * box, y: 9 * box }]
@@ -275,7 +277,7 @@ function resetGame(start = false) {
   // Generate new food
   food = generateFood()
 
-  // Clear previous loop
+  // Clear previous game loop
   clearInterval(gameLoop)
 
   // Start new game or show start screen
@@ -288,7 +290,7 @@ function resetGame(start = false) {
   }
 }
 
-// Draw start screen
+// Draw start screen with instructions
 function drawStartScreen() {
   // Background
   gameCtx.fillStyle = currentSnakeTheme.bg
@@ -299,7 +301,7 @@ function drawStartScreen() {
   gameCtx.lineWidth = 2
   gameCtx.strokeRect(0, 0, gameCanvas.width, gameCanvas.height)
 
-  // Text
+  // Instructions text
   gameCtx.fillStyle = currentSnakeTheme.text
   gameCtx.font = "18px Inter"
   gameCtx.textAlign = "center"
@@ -313,7 +315,7 @@ function drawStartScreen() {
   gameCtx.fillText("to start", gameCanvas.width / 2, gameCanvas.height / 2 + 15)
 }
 
-// Draw snake eyes
+// Draw snake eyes (visual detail)
 function drawSnakeEyes(head) {
   gameCtx.fillStyle = "#000"
   const eyeOffset = box * 0.2
@@ -428,7 +430,7 @@ function drawGame() {
       break
   }
 
-  // Check collisions
+  // Check collisions (walls or self)
   const collision =
     headX < 0 ||
     headY < 0 ||
@@ -450,7 +452,7 @@ function drawGame() {
     score++
     document.getElementById("score").textContent = score
 
-    // Check high score
+    // Check and update high score
     if (score > highScore) {
       highScore = score
       localStorage.setItem("snakeHighScore", highScore)
@@ -465,7 +467,7 @@ function drawGame() {
     foodPulse = 6
     foodRing = 8
 
-    // Particle effect
+    // Particle effect (speed boost)
     particlesArray.forEach((p) => {
       p.speedX *= 1.4
       p.speedY *= 1.4
@@ -484,7 +486,7 @@ function drawGame() {
   }
 }
 
-// End game
+// End game and show game over screen
 function endGame() {
   clearInterval(gameLoop)
   gameState = "gameover"
@@ -511,15 +513,15 @@ function endGame() {
   )
 }
 
-/* =========================
+/* ===========================================
    CONTROLS AND EVENT LISTENERS
-========================= */
+=========================================== */
 
 // Keyboard controls
 document.addEventListener("keydown", (e) => {
   const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]
 
-  // Prevent default arrow key behavior
+  // Prevent default arrow key behavior (page scrolling)
   if (keys.includes(e.key)) e.preventDefault()
 
   // Start screen → start game
@@ -534,7 +536,7 @@ document.addEventListener("keydown", (e) => {
     return
   }
 
-  // Game running → change direction
+  // Game running → change direction (prevent 180° turns)
   if (gameState !== "running") return
 
   if (e.key === "ArrowUp" && direction !== "DOWN") nextDirection = "UP"
@@ -599,18 +601,18 @@ document.addEventListener("DOMContentLoaded", () => {
           break
       }
 
-      // Trigger keyboard event
+      // Trigger keyboard event for consistent control handling
       const event = new KeyboardEvent("keydown", { key: key })
       document.dispatchEvent(event)
     })
   })
 
-  // Theme button - DRAGGING ISSUE FIX
+  // Theme button event listeners
   const themeToggle = document.getElementById("theme-toggle")
   if (themeToggle) {
     themeToggle.addEventListener("click", toggleMode)
 
-    // PREVENT DRAGGING ON THEME BUTTON
+    // Prevent dragging on theme button
     themeToggle.addEventListener("dragstart", (e) => {
       e.preventDefault()
       return false
@@ -624,7 +626,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation()
     })
 
-    // Inline styles to ensure
+    // Inline styles to prevent text selection
     themeToggle.style.userSelect = "none"
     themeToggle.style.webkitUserSelect = "none"
     themeToggle.style.msUserSelect = "none"
@@ -633,17 +635,46 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 })
 
-/* =========================
-   INITIALIZATION
-========================= */
+/* ===========================================
+   ADDITIONAL PREVENTION FOR THEME BUTTON
+=========================================== */
 
-// Initialize theme
+// Prevent accidental dragging and text selection on theme button
+document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.getElementById("theme-toggle")
+
+  if (themeToggle) {
+    // Prevent text selection
+    themeToggle.addEventListener("selectstart", (e) => e.preventDefault())
+
+    // Prevent dragging on mobile
+    themeToggle.addEventListener(
+      "touchmove",
+      (e) => {
+        e.preventDefault()
+      },
+      { passive: false }
+    )
+
+    // Ensure click always works
+    themeToggle.addEventListener("mousedown", (e) => {
+      e.preventDefault()
+      themeToggle.focus()
+    })
+  }
+})
+
+/* ===========================================
+   INITIALIZATION
+=========================================== */
+
+// Initialize theme from localStorage
 initTheme()
 
-// Initialize game
+// Initialize game (shows start screen)
 resetGame()
 
-// Ensure canvas doesn't interfere
+// Final setup after window loads
 window.addEventListener("load", () => {
   // Ensure particles canvas doesn't capture events
   const particlesCanvas = document.getElementById("particles")
