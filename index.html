@@ -1,186 +1,304 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Projetos - CaduDev 👨‍💻</title>
-    <link rel="icon" href="./assets/full-moon.png" type="image/png" />
-
+    
+    <!-- SEO Meta Tags -->
+    <title>CaduDev | Full Stack Developer</title>
+    <meta name="description" content="Portfolio of Carlos Eduardo - Full Stack Developer specializing in Java, Spring Boot, Node.js, and React">
+    <meta name="author" content="Carlos Eduardo Rocha">
+    <meta name="keywords" content="developer, full stack, java, spring boot, portfolio, web development">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./assets/full-moon.png" type="image/png">
+    
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
 
-  <body>
-    <!-- Background Particles -->
+<body>
+    <!-- Particles Background Canvas -->
     <canvas id="particles"></canvas>
 
+    <!-- Loading Screen -->
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading portfolio...</p>
+    </div>
+
+    <!-- Main Content Container -->
     <main id="container">
-      <!-- Profile -->
-      <section id="profile">
-        <img
-          src="./assets/avatar.png"
-          alt="Foto de Carlos Eduardo, sorrindo, com barba e cabelo amarrado."
-        />
-        <p>@cadurochhaa</p>
-      </section>
+        <!-- Profile Section -->
+        <section id="profile" aria-label="Profile information">
+            <div class="profile-container">
+                <img src="./assets/avatar.png" alt="Carlos Eduardo - Full Stack Developer" id="profile-img">
+                <div class="profile-info">
+                    <h1>Carlos Eduardo</h1>
+                    <p class="tagline">Full Stack Developer</p>
+                    <p class="username">@cadurochhaa</p>
+                    <p class="bio">Java • Spring Boot • Node.js • React • Python</p>
+                </div>
+            </div>
+        </section>
 
-      <!-- Theme Switch -->
-      <div id="switch">
-        <button aria-label="Alternar tema"></button>
-        <span></span>
-      </div>
-
-      <!-- Links -->
-      <nav>
-        <ul>
-          <li>
-            <a
-              href="https://linkedin.com/in/carlos-eduardo-408087230"
-              target="_blank"
-              rel="noopener"
-            >
-              Veja meu LinkedIn
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://github.com/carloseduardo-rocha"
-              target="_blank"
-              rel="noopener"
-            >
-              Conheça meu GitHub
-            </a>
-          </li>
-
-          <li>
-            <a href="./assets/Curriculo-Carlos_Eduardo.pdf" target="_blank">
-              Veja meu Currículo
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://wa.me/5585991799221?text=Olá,%20vi%20seu%20portfólio%20e%20gostaria%20de%20entrar%20em%20contato!"
-              target="_blank"
-              rel="noopener"
-            >
-              Entre em contato comigo
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <!-- Featured Projects -->
-      <section class="projects-section">
-        <h2>🚀 Projetos em Destaque</h2>
-
-        <p class="projects-subtitle">
-          Projetos que representam minha evolução como desenvolvedor
-        </p>
-
-        <div class="projects-grid">
-          <!-- Spring Boot -->
-          <a
-            class="project-card highlight"
-            href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="card-header">
-              <h3>☕ Spring Boot Workshop</h3>
-              <span class="badge">Featured</span>
-           </div>
-            <p>Java • Spring Boot • REST API</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
-
-          <!-- FitTribe -->
-          <a
-            class="project-card"
-            href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile"
-            target="_blank"
-            rel="noopener"
-          >
-            <h3>📱 FitTribe</h3>
-            <p>Node.js • Mobile • API • SQLite</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
-
-          <!-- Chess -->
-          <a
-            class="project-card"
-            href="https://github.com/carloseduardo-rocha/Chess-System-Java"
-            target="_blank"
-            rel="noopener"
-          >
-            <h3>♟️ Chess System</h3>
-            <p>Java • OOP • Game Logic</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
-
-          <!-- AI Agent -->
-          <a
-            class="project-card"
-            href="https://github.com/carloseduardo-rocha/Alura-IA-Agents"
-            target="_blank"
-            rel="noopener"
-          >
-            <h3>🤖 AI Agent</h3>
-            <p>Python • AI • Automation</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
+        <!-- Theme Toggle Switch -->
+        <div id="switch">
+            <!-- Hidden button for accessibility -->
+            <button id="theme-toggle" aria-label="Toggle theme"></button>
+            
+            <!-- Visual track -->
+            <span></span>
+            
+            <!-- Visual button with icon -->
+            <div class="switch-button">
+                <span class="switch-icon"></span>
+            </div>
         </div>
-      </section>
 
-      <!-- Game -->
-      <section class="game-section">
-        <h2>Mini Game — Snake 🐍</h2>
-        <canvas id="snakeGame" aria-label="Jogo Snake"></canvas>
-        <p>Pontuação: <span id="score">0</span></p>
-      </section>
+        <!-- Quick Links Navigation -->
+        <nav aria-label="Quick links">
+            <ul>
+                <li>
+                    <a href="https://linkedin.com/in/carlos-eduardo-408087230" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <span class="link-icon" aria-hidden="true">👔</span>
+                        <div>
+                            <strong>LinkedIn</strong>
+                            <span>Professional profile</span>
+                        </div>
+                        <span class="link-arrow" aria-hidden="true">→</span>
+                    </a>
+                </li>
 
-      <!-- Social -->
-      <section id="social-links" aria-label="Redes sociais">
-        <a href="https://github.com/carloseduardo-rocha" target="_blank">
-          <ion-icon name="logo-github"></ion-icon>
-        </a>
+                <li>
+                    <a href="https://github.com/carloseduardo-rocha" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <span class="link-icon" aria-hidden="true">💻</span>
+                        <div>
+                            <strong>GitHub</strong>
+                            <span>Projects and code</span>
+                        </div>
+                        <span class="link-arrow" aria-hidden="true">→</span>
+                    </a>
+                </li>
 
-        <a href="https://www.instagram.com/cadurochhaa/" target="_blank">
-          <ion-icon name="logo-instagram"></ion-icon>
-        </a>
+                <li>
+                    <a href="./assets/Curriculo-Carlos_Eduardo.pdf" target="_blank" class="link-card">
+                        <span class="link-icon" aria-hidden="true">📄</span>
+                        <div>
+                            <strong>Currículo</strong>
+                            <span>Open PDF</span>
+                        </div>
+                        <span class="link-arrow" aria-hidden="true">→</span>
+                    </a>
+                </li>
 
-        <a
-          href="https://linkedin.com/in/carlos-eduardo-408087230"
-          target="_blank"
-        >
-          <ion-icon name="logo-linkedin"></ion-icon>
-        </a>
-      </section>
+                <li>
+                    <a href="https://wa.me/5585991799221?text=Hello,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20get%20in%20touch!" 
+                       target="_blank" rel="noopener noreferrer" class="link-card whatsapp-btn">
+                        <span class="link-icon" aria-hidden="true">💬</span>
+                        <div>
+                            <strong>Contact me</strong>
+                            <span>WhatsApp</span>
+                        </div>
+                        <span class="link-arrow" aria-hidden="true">💬</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-      <!-- Footer -->
-      <footer>👨‍💻 Feito por Carlos Eduardo</footer>
+        <!-- Featured Projects Section -->
+        <section class="projects-section" aria-label="Featured projects">
+            <h2>🚀 Projetos em destaque </h2>
+            <p class="projects-subtitle">Projetos que representam minha evolução como desenvolvedor</p>
+
+            <div class="projects-grid">
+                <!-- Spring Boot Project -->
+                <a class="project-card highlight" 
+                   href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa" 
+                   target="_blank" rel="noopener noreferrer">
+                    <div class="card-header">
+                        <h3>☕ Spring Boot Workshop</h3>
+                        <span class="badge">Featured</span>
+                    </div>
+                    <p>Java • Spring Boot • REST API</p>
+                    <p class="project-links">View on GitHub →</p>
+                </a>
+
+                <!-- FitTribe Project -->
+                <a class="project-card" 
+                   href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile" 
+                   target="_blank" rel="noopener noreferrer">
+                    <h3>📱 FitTribe</h3>
+                    <p>Node.js • Mobile • API • SQLite</p>
+                    <p class="project-links">View on GitHub →</p>
+                </a>
+
+                <!-- Chess System Project -->
+                <a class="project-card" 
+                   href="https://github.com/carloseduardo-rocha/Chess-System-Java" 
+                   target="_blank" rel="noopener noreferrer">
+                    <h3>♟️ Chess System</h3>
+                    <p>Java • OOP • Game Logic</p>
+                    <p class="project-links">View on GitHub →</p>
+                </a>
+
+                <!-- AI Agent Project -->
+                <a class="project-card" 
+                   href="https://github.com/carloseduardo-rocha/Alura-IA-Agents" 
+                   target="_blank" rel="noopener noreferrer">
+                    <h3>🤖 AI Agent</h3>
+                    <p>Python • AI • Automation</p>
+                    <p class="project-links">View on GitHub →</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills-section" aria-label="Technologies and skills">
+            <h2>🛠️ Technologies & Skills</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">REST API</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">TypeScript</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Database</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">SQLite</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Linux</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Snake Game Section -->
+        <section class="game-section" aria-label="Snake mini-game">
+            <div class="game-header">
+                <h2>🎮 Mini Game — Snake</h2>
+                <div class="game-controls">
+                    <button id="restart-game" class="btn-sm" aria-label="Restart game">🔄 Restart</button>
+                    <button id="pause-game" class="btn-sm" aria-label="Pause game">⏸️ Pause</button>
+                </div>
+            </div>
+            
+            <div class="game-container">
+                <canvas id="snakeGame" width="400" height="400" aria-label="Snake game canvas"></canvas>
+                
+                <div class="game-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">Score</span>
+                        <span id="score" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">High Score</span>
+                        <span id="highScore" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="game-instructions">
+                    <p><strong>Controles:</strong> Setas do teclado</p>
+                    <!-- Mobile arrow controls (visible on mobile) -->
+                    <div class="mobile-controls">
+                        <button class="control-btn" data-direction="up" aria-label="Move up">↑</button>
+                        <div class="row-controls">
+                            <button class="control-btn" data-direction="left" aria-label="Move left">←</button>
+                            <button class="control-btn" data-direction="down" aria-label="Move down">↓</button>
+                            <button class="control-btn" data-direction="right" aria-label="Move right">→</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Media Links -->
+        <section id="social-links" aria-label="Social media links">
+            <a href="https://github.com/carloseduardo-rocha" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <ion-icon name="logo-github"></ion-icon>
+            </a>
+
+            <a href="https://www.instagram.com/cadurochhaa/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+
+            <a href="https://linkedin.com/in/carlos-eduardo-408087230" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+            
+            <a href="mailto:cadurocha39@gmail.com?subject=Contact%20via%20Portfolio&body=Hello%20Carlos,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20get%20in%20touch!" 
+               target="_blank" aria-label="Send email">
+                <ion-icon name="mail-outline"></ion-icon>
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>👨‍💻 Feito por Carlos Eduardo • Última atualização: <span id="current-year"></span></p>
+            <p class="footer-links">
+                <span id="theme-info">Theme: Dark</span> • 
+                <a href="https://github.com/carloseduardo-rocha/Projeto-RocketSeat/tree/main" 
+                   target="_blank" rel="noopener noreferrer">Ver código-fonte</a>
+            </p>
+        </footer>
     </main>
 
-    <!-- Icons -->
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+    <!-- Ionicons Library -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <!-- Main Script -->
+    <!-- Main JavaScript -->
     <script src="./script.js"></script>
-  </body>
+    
+    <!-- Initialization Script -->
+    <script>
+        // Initialize loading screen and current year
+        window.addEventListener('load', () => {
+            // Loading screen
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 300);
+            }, 500);
+            
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
 </html>
