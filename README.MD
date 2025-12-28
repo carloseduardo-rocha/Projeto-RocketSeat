@@ -120,16 +120,6 @@ function toggleMode() {
 - Theme-based color changes
 - Performance optimized with requestAnimationFrame
 
-## 📸 Screenshots
-
-| Dark Theme | Light Theme |
-|------------|-------------|
-| <img src=".github/dark-theme.jpg" width="400"> | <img src=".github/light-theme.jpg" width="400"> |
-
-| Mobile View | Snake Game |
-|-------------|------------|
-| <img src=".github/mobile-view.jpg" width="200"> | <img src=".github/snake-game.jpg" width="200"> |
-
 ## 🤝 Contributing
 
 Contribuições são bem-vindas! Siga estes passos:
@@ -144,14 +134,6 @@ Contribuições são bem-vindas! Siga estes passos:
 
 Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
-## 👨‍💻 Author
-
-**Carlos Eduardo Rocha** - Full Stack Developer
-
-- 💼 [LinkedIn](https://linkedin.com/in/carlos-eduardo-408087230)
-- 💻 [GitHub](https://github.com/carloseduardo-rocha)
-- 📧 [Email](mailto:cadurocha39@gmail.com)
-
 ## 🙏 Acknowledgments
 
 - Agradecimentos à [Rocketseat](https://www.rocketseat.com.br/) pelo programa Discover
@@ -164,4 +146,3 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 ⭐️ Se este projeto te ajudou, considere dar uma estrela no repositório!
 
 </div>
-```
