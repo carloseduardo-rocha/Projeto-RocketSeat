@@ -1,4 +1,4 @@
-<h1 align="center">👨‍💻 Carlos Eduardo - Full Stack Developer</h1>
+<h1 align="center">👨‍💻 Carlos Eduardo - Backend Developer</h1>
 
 <p align="center">
   <strong>Portfolio pessoal desenvolvido durante o programa Discover da Rocketseat</strong>

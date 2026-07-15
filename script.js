@@ -514,6 +514,63 @@ function endGame() {
 }
 
 /* ===========================================
+   SKILLS TOOLTIPS
+=========================================== */
+
+// Keep each skill tooltip inside the viewport and support tap on touch devices
+function initSkillTooltips() {
+  const buttons = document.querySelectorAll(".skill-icon-btn")
+  if (!buttons.length) return
+
+  function clampTooltip(btn) {
+    const tooltip = btn.querySelector(".skill-tooltip")
+    if (!tooltip) return
+
+    tooltip.style.setProperty("--tooltip-shift", "0px")
+    const rect = tooltip.getBoundingClientRect()
+    const margin = 20
+    let shift = 0
+
+    if (rect.left < margin) {
+      shift = margin - rect.left
+    } else if (rect.right > window.innerWidth - margin) {
+      shift = window.innerWidth - margin - rect.right
+    }
+
+    tooltip.style.setProperty("--tooltip-shift", `${shift}px`)
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("mouseenter", () => clampTooltip(btn))
+    btn.addEventListener("focus", () => clampTooltip(btn))
+
+    // Tap to toggle (touch devices without real hover)
+    btn.addEventListener("click", () => {
+      const wasActive = btn.classList.contains("active")
+      buttons.forEach((b) => b.classList.remove("active"))
+      if (!wasActive) {
+        btn.classList.add("active")
+        clampTooltip(btn)
+      }
+    })
+  })
+
+  // Close open tooltip when tapping outside
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".skill-icon-btn")) {
+      buttons.forEach((b) => b.classList.remove("active"))
+    }
+  })
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      buttons.forEach((b) => b.classList.remove("active"))
+    }
+  })
+}
+
+/* ===========================================
    CONTROLS AND EVENT LISTENERS
 =========================================== */
 
@@ -670,6 +727,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Initialize theme from localStorage
 initTheme()
+
+// Initialize skills tooltips
+initSkillTooltips()
 
 // Initialize game (shows start screen)
 resetGame()
