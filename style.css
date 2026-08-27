@@ -52,6 +52,7 @@ footer p, .projects-subtitle, .game-instructions {
   --card-padding: 1.5rem;
   --skill-panel-bg: rgba(15, 23, 42, 0.92);
   --skill-panel-hover: rgba(21, 32, 56, 0.96);
+  --shine-color: rgba(0, 255, 255, 0.3);
 }
 
 /* Light Theme Variables */
@@ -72,6 +73,40 @@ footer p, .projects-subtitle, .game-instructions {
   --shadow-color: rgba(0, 0, 0, 0.1);
   --skill-panel-bg: rgba(255, 255, 255, 0.95);
   --skill-panel-hover: rgba(255, 255, 255, 1);
+  --shine-color: rgba(37, 99, 235, 0.35);
+}
+
+/* ===========================================
+   REDUCED MOTION
+=========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ===========================================
+   SCROLL REVEAL
+=========================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ===========================================
@@ -125,6 +160,21 @@ body {
 }
 
 /* ===========================================
+   SCROLL PROGRESS BAR
+=========================================== */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--primary-color), rgba(0, 255, 255, 0.3));
+  box-shadow: 0 0 8px var(--primary-color);
+  z-index: 15000;
+  pointer-events: none;
+}
+
+/* ===========================================
    PARTICLES CANVAS
 =========================================== */
 #particles {
@@ -174,6 +224,82 @@ body {
   padding: 3px;
   background: var(--card-bg);
   transition: all 0.3s ease;
+  animation: heroEnter 0.7s ease both;
+}
+
+#profile img:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  transform: scale(1.04);
+}
+
+.light #profile img:hover {
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.4);
+}
+
+.profile-info h1 {
+  animation: heroEnter 0.7s ease 0.08s both;
+}
+
+.profile-info .tagline {
+  animation: heroEnter 0.7s ease 0.16s both;
+}
+
+.profile-info .username {
+  animation: heroEnterDim08 0.7s ease 0.22s both;
+}
+
+.profile-info .bio {
+  animation: heroEnterDim07 0.7s ease 0.28s both;
+}
+
+.profile-info .bio-secondary {
+  animation: heroEnterDim055 0.7s ease 0.34s both;
+}
+
+/* Each keyframe ends at the element's own resting opacity (set in its base
+   rule above) so the fill-mode doesn't leave it stuck at full opacity. */
+@keyframes heroEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroEnterDim08 {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroEnterDim07 {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroEnterDim055 {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 0.55;
+    transform: translateY(0);
+  }
 }
 
 .profile-info h1 {
@@ -224,6 +350,131 @@ body {
   max-width: 400px;
   margin: 0.15rem auto 0;
   color: var(--text-color);
+}
+
+/* Avatar hover bio bubble (Instagram-style) */
+.avatar-wrap {
+  position: relative;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Discoverability cue — a persistent, gently pulsing "i" badge on the avatar
+   so it's obvious there's something to tap/hover (the bubble alone was
+   invisible on mobile). Expands to a label on hover/focus; on touch it's
+   the badge + pulse that signal it. */
+.avatar-bio-cue {
+  position: absolute;
+  right: -2px;
+  bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem;
+  background: var(--primary-color);
+  color: var(--bg-color);
+  border: 2px solid var(--bg-color);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  overflow: hidden;
+  white-space: nowrap;
+  transition: gap 0.25s ease, padding 0.25s ease;
+  animation: avatarCuePulse 2.4s ease-in-out infinite;
+}
+
+.avatar-bio-cue-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.avatar-bio-cue-label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
+}
+
+.avatar-wrap:hover .avatar-bio-cue-label,
+.avatar-wrap:focus-within .avatar-bio-cue-label,
+.avatar-wrap.active .avatar-bio-cue-label {
+  max-width: 140px;
+  opacity: 1;
+  padding-right: 0.5rem;
+}
+
+/* Stop nagging once the bubble is open */
+.avatar-wrap:hover .avatar-bio-cue,
+.avatar-wrap:focus-within .avatar-bio-cue,
+.avatar-wrap.active .avatar-bio-cue {
+  animation: none;
+}
+
+@keyframes avatarCuePulse {
+  0%, 100% {
+    box-shadow: 0 2px 10px var(--shadow-color), 0 0 0 0 var(--shine-color);
+  }
+  50% {
+    box-shadow: 0 2px 10px var(--shadow-color), 0 0 0 8px transparent;
+  }
+}
+
+.avatar-bio-bubble {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translate(-50%, 6px);
+  width: 280px;
+  max-width: calc(100vw - 3rem);
+  padding: 1rem 1.1rem;
+  background: var(--skill-panel-bg);
+  border: 1px solid var(--primary-color);
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px var(--shadow-color);
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 30;
+}
+
+.avatar-bio-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-bottom-color: var(--primary-color);
+}
+
+.avatar-bio-bubble p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.avatar-bio-bubble strong {
+  color: var(--primary-color);
+}
+
+.avatar-wrap:hover .avatar-bio-bubble,
+.avatar-wrap:focus-within .avatar-bio-bubble,
+.avatar-wrap.active .avatar-bio-bubble {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
 }
 
 /* ===========================================
@@ -469,6 +720,29 @@ nav ul {
   opacity: 0.8;
 }
 
+/* Shine sweep effect on hover */
+.link-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    var(--shine-color),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.link-card:hover::after {
+  left: 130%;
+}
+
 .link-card:hover {
   background: var(--card-hover);
   border-color: var(--primary-color);
@@ -576,6 +850,364 @@ nav ul {
   gap: 1rem;
 }
 
+.projects-grid-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.7;
+  margin: 1.75rem 0 1rem;
+  color: var(--text-color);
+}
+
+/* ===========================================
+   GESTÃOCHECK CASE STUDY
+=========================================== */
+.case-study {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: var(--card-bg);
+  border: 2px solid var(--primary-color);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+.case-study-media {
+  perspective: 600px;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.case-study-media-hint {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  padding: 0.4rem 0.9rem;
+  background: var(--skill-panel-bg);
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.case-study-media:hover .case-study-media-hint,
+.case-study-media:focus-visible .case-study-media-hint {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.case-study-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+/* Hover-scrub mini carousel: each hover-enter reveals the next screen,
+   with the next couple screens peeking out from behind like a photo stack */
+.media-stack {
+  position: relative;
+}
+
+.media-stack .stack-active {
+  position: relative;
+  z-index: 3;
+  transition: opacity 0.35s ease;
+}
+
+.media-stack .stack-behind-1,
+.media-stack .stack-behind-2 {
+  position: absolute;
+  inset: 0;
+  border-color: var(--border-color);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.media-stack .stack-behind-1 {
+  z-index: 2;
+  opacity: 0.55;
+  filter: saturate(0.6);
+  transform: rotate(-3deg) translate(-8px, 5px) scale(0.95);
+}
+
+.media-stack .stack-behind-2 {
+  z-index: 1;
+  opacity: 0.32;
+  filter: saturate(0.4);
+  transform: rotate(4deg) translate(10px, 8px) scale(0.91);
+}
+
+.case-study-media:hover .stack-behind-1 {
+  transform: rotate(-5deg) translate(-14px, 8px) scale(0.93);
+}
+
+.case-study-media:hover .stack-behind-2 {
+  transform: rotate(6deg) translate(16px, 12px) scale(0.88);
+}
+
+.case-study-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.case-study-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.case-study-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.case-study-body > p,
+.case-study-more-inner p {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  opacity: 0.85;
+  color: var(--text-color);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+/* Collapsible tail of the description ("Ler mais") — keeps the card roughly
+   as tall as the screenshot beside it instead of a wall of text. JS sets the
+   exact pixel max-height on toggle, so it animates at the right speed (no
+   laggy "empty travel" of a fixed ceiling). */
+.case-study-more {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+/* Eat the flex gap around the collapsed block so it doesn't leave a hole */
+.case-study-more:not(.open) {
+  margin-top: -0.85rem;
+}
+
+.case-study-more-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.case-study-toggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  margin-top: -0.15rem;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.case-study-toggle:hover {
+  text-decoration: underline;
+}
+
+.case-study-toggle-chevron {
+  transition: transform 0.3s ease;
+}
+
+.case-study-toggle[aria-expanded="true"] .case-study-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+.case-study-toggle .case-study-toggle-less {
+  display: none;
+}
+
+.case-study-toggle[aria-expanded="true"] .case-study-toggle-more {
+  display: none;
+}
+
+.case-study-toggle[aria-expanded="true"] .case-study-toggle-less {
+  display: inline;
+}
+
+.case-study-stack {
+  font-weight: 600;
+  color: var(--primary-color);
+  opacity: 1 !important;
+}
+
+.case-study-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.case-study-stats .stat-box {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+}
+
+.case-study-stats .stat-label {
+  white-space: nowrap;
+}
+
+.case-study-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.feature-chip {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-color);
+  transition: all 0.25s ease;
+}
+
+.case-study-roadmap-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.65;
+  color: var(--text-color);
+  margin-top: 0.25rem;
+}
+
+.feature-chip-future {
+  border-style: dashed;
+  opacity: 0.75;
+}
+
+.feature-chip:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.case-study-timeline {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.case-study-timeline::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: var(--border-color);
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-color);
+}
+
+.timeline-current {
+  opacity: 1;
+  font-weight: 700;
+}
+
+.timeline-current .timeline-dot {
+  animation: timelinePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes timelinePulse {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--primary-color);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 18px var(--primary-color), 0 0 30px rgba(0, 255, 255, 0.4);
+    transform: scale(1.3);
+  }
+}
+
+.case-study-cta {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.case-study-cta:hover {
+  text-decoration: underline;
+}
+
+.case-study-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.case-study-links .case-study-cta {
+  margin-top: 0;
+}
+
+.case-study-cta-secondary {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0.7;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.case-study-cta-secondary:hover {
+  opacity: 1;
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
 .project-card {
   padding: 1.25rem;
   background: var(--card-bg);
@@ -635,6 +1267,7 @@ nav ul {
   border-radius: 20px;
   font-weight: 600;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .project-card > p:not(.project-links) {
@@ -642,6 +1275,13 @@ nav ul {
   opacity: 0.8;
   line-height: 1.4;
   color: var(--text-color);
+}
+
+.project-card > p:not(.project-desc):not(.project-links) {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  opacity: 1;
 }
 
 .project-links {
@@ -657,6 +1297,217 @@ nav ul {
 .project-card.highlight {
   border: 2px solid var(--primary-color);
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+.project-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+/* ===========================================
+   PROJECT VISUALS (diagrams, boards, mockups)
+=========================================== */
+.project-visual {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+  perspective: 600px;
+}
+
+.tilt-on-hover {
+  transition: transform 0.15s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* --- Flow / architecture diagram (Spring Boot, AI Agent) --- */
+.flow-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.9rem;
+  position: relative;
+}
+
+.flow-step {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-color);
+  position: relative;
+  z-index: 1;
+}
+
+.flow-pulse {
+  position: absolute;
+  left: 50%;
+  top: 0.9rem;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 0 0 12px var(--primary-color);
+  opacity: 0;
+}
+
+.project-visual:hover .flow-pulse {
+  animation: flowPulse 1.4s ease forwards;
+}
+
+@keyframes flowPulse {
+  0% {
+    top: 0.9rem;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 1.7rem);
+    opacity: 0;
+  }
+}
+
+/* --- Chess board mini (Chess System) --- */
+.chess-board-mini {
+  padding: 0.6rem;
+}
+
+.chess-row {
+  display: flex;
+}
+
+.chess-row .sq {
+  flex: 1;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--text-color);
+  position: relative;
+}
+
+.chess-row:nth-child(odd) .sq:nth-child(odd),
+.chess-row:nth-child(even) .sq:nth-child(even) {
+  background: var(--card-bg);
+}
+
+.chess-row:nth-child(odd) .sq:nth-child(even),
+.chess-row:nth-child(even) .sq:nth-child(odd) {
+  background: transparent;
+}
+
+.chess-board-mini .pawn-e2 {
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.project-visual:hover .pawn-e2 {
+  transform: translateY(-200%);
+  filter: drop-shadow(0 0 6px var(--primary-color));
+}
+
+/* --- Autoplay variants (used inside the preview modal, no hover needed) --- */
+.project-visual.autoplay .flow-pulse {
+  animation: flowPulse 1.8s ease infinite;
+}
+
+@keyframes pawnMoveLoop {
+  0%, 15% {
+    transform: translateY(0);
+    filter: none;
+  }
+  50%, 65% {
+    transform: translateY(-200%);
+    filter: drop-shadow(0 0 6px var(--primary-color));
+  }
+  100% {
+    transform: translateY(0);
+    filter: none;
+  }
+}
+
+.project-visual.autoplay .pawn-e2 {
+  animation: pawnMoveLoop 3s ease-in-out infinite;
+}
+
+@keyframes crossfadeA {
+  0%, 45% {
+    opacity: 1;
+  }
+  55%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes crossfadeB {
+  0%, 45% {
+    opacity: 0;
+  }
+  55%, 100% {
+    opacity: 1;
+  }
+}
+
+.project-visual.autoplay .phone-screen-a {
+  animation: crossfadeA 3s ease-in-out infinite;
+}
+
+.project-visual.autoplay .phone-screen-b {
+  animation: crossfadeB 3s ease-in-out infinite;
+}
+
+/* --- Phone mockup (FitTribe) --- */
+.phone-mockup {
+  display: flex;
+  justify-content: center;
+  padding: 0.9rem;
+}
+
+.phone-frame {
+  position: relative;
+  width: 120px;
+  aspect-ratio: 9 / 19.5;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 3px solid var(--border-color);
+  box-shadow: 0 4px 16px var(--shadow-color);
+  background: #000;
+}
+
+.phone-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+}
+
+.phone-screen-b {
+  opacity: 0;
+}
+
+.project-visual:hover .phone-screen-a {
+  opacity: 0;
+}
+
+.project-visual:hover .phone-screen-b {
+  opacity: 1;
 }
 
 /* ===========================================
@@ -725,9 +1576,18 @@ nav ul {
   transition: all 0.25s ease;
 }
 
-.skill-icon-btn i {
+.skill-icon-btn i,
+.skill-icon-btn .skill-icon-emoji {
   font-size: 1.75rem;
   line-height: 1;
+}
+
+.skill-tooltip code {
+  font-family: monospace;
+  background: var(--surface-color);
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
 }
 
 .skill-icon-btn span {
@@ -736,6 +1596,25 @@ nav ul {
   text-align: center;
   line-height: 1.2;
   opacity: 0.85;
+}
+
+.skill-level-dots {
+  display: flex;
+  gap: 3px;
+  margin-top: 1px;
+}
+
+.skill-level-dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--border-color);
+  font-style: normal;
+}
+
+.skill-level-dots i.filled {
+  background: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
 }
 
 .skill-icon-btn:hover,
@@ -828,6 +1707,252 @@ nav ul {
 }
 
 /* ===========================================
+   ACHIEVEMENTS
+=========================================== */
+.achievements-section {
+  margin: 2rem 0;
+  padding: var(--card-padding);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.achievements-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.achievements-subtitle {
+  opacity: 0.7;
+  margin-bottom: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.achievements-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* --- Section heading (Formação / Certificados) --- */
+.achievement-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.achievement-group-emoji {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.achievement-group-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--primary-color);
+  color: var(--bg-color);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* --- Responsive grid of cards --- */
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.achievement-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 0.4rem;
+  width: 100%;
+  margin: 0;
+  padding: 1.25rem 1.1rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  color: var(--text-color);
+  font: inherit;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+button.achievement-card {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.achievement-card.has-pdf:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+/* Shine sweep, same technique as the nav link cards */
+.achievement-card.has-pdf::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, var(--shine-color), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.achievement-card.has-pdf:hover::after {
+  left: 130%;
+}
+
+.achievement-card.has-pdf:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px var(--shadow-color), 0 0 24px rgba(0, 255, 255, 0.15);
+}
+
+.achievement-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-color), transparent);
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.3);
+  margin-bottom: 0.35rem;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.achievement-card.has-pdf:hover .achievement-badge {
+  transform: scale(1.1) rotate(-6deg);
+}
+
+.achievement-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+.achievement-card h4 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-color);
+  line-height: 1.3;
+}
+
+.achievement-issuer {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--primary-color);
+}
+
+.achievement-desc {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  line-height: 1.45;
+  color: var(--text-color);
+}
+
+.achievement-link {
+  margin-top: auto;
+  padding-top: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.achievement-card.has-pdf:hover .achievement-link {
+  text-decoration: underline;
+}
+
+.achievement-link-pending {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+/* --- "Ver mais" per group (extra cards collapsed behind a toggle) --- */
+.achievement-more {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.achievement-more-inner {
+  padding-top: 1rem;
+}
+
+.achievement-more-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: start;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--primary-color);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.achievement-more-toggle:hover {
+  border-color: var(--primary-color);
+  background: var(--card-hover);
+}
+
+.achievement-more-chevron {
+  transition: transform 0.3s ease;
+}
+
+.achievement-more-toggle[aria-expanded="true"] .achievement-more-chevron {
+  transform: rotate(180deg);
+}
+
+.achievement-more-toggle .achievement-less-label {
+  display: none;
+}
+
+.achievement-more-toggle[aria-expanded="true"] .achievement-more-label {
+  display: none;
+}
+
+.achievement-more-toggle[aria-expanded="true"] .achievement-less-label {
+  display: inline;
+}
+
+/* ===========================================
    GAME SECTION
 =========================================== */
 .game-section {
@@ -886,7 +2011,9 @@ nav ul {
   gap: 1.5rem;
 }
 
-#snakeGame {
+#snakeGame,
+#pongGame,
+#flappyGame {
   width: 100%;
   max-width: 400px;
   aspect-ratio: 1 / 1;
@@ -895,10 +2022,151 @@ nav ul {
   background: var(--bg-color);
   box-shadow: 0 4px 20px var(--shadow-color), 0 0 30px rgba(0, 255, 255, 0.1);
   transition: box-shadow 0.3s;
+  touch-action: manipulation;
 }
 
-#snakeGame:hover {
+#snakeGame:hover,
+#pongGame:hover,
+#flappyGame:hover {
   box-shadow: 0 4px 25px var(--shadow-color), 0 0 40px rgba(0, 255, 255, 0.15);
+}
+
+/* ===========================================
+   GAME SELECTOR (Steam/Xbox-style tile picker)
+=========================================== */
+.game-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.game-tile {
+  flex: 1;
+  min-width: 100px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--text-color);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+/* Shine sweep on hover, same technique used across the site */
+.game-tile::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, var(--shine-color), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.game-tile:hover::after {
+  left: 130%;
+}
+
+.game-tile-icon {
+  font-size: 1.9rem;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+
+.game-tile-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.game-tile:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.game-tile:hover .game-tile-icon {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+.game-tile.active {
+  background: linear-gradient(150deg, var(--primary-color), var(--shine-color));
+  border-color: var(--primary-color);
+  color: var(--bg-color);
+  box-shadow: 0 6px 22px rgba(0, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.game-tile.active .game-tile-icon {
+  transform: scale(1.1);
+}
+
+/* Panel swap gets a little entrance so switching games feels responsive */
+.game-panel:not([hidden]) {
+  animation: gamePanelIn 0.35s ease both;
+}
+
+@keyframes gamePanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ===========================================
+   TIC-TAC-TOE
+=========================================== */
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.ttt-cell {
+  aspect-ratio: 1;
+  background: var(--bg-color);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ttt-cell:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  background: var(--surface-color);
+}
+
+.ttt-cell:disabled {
+  cursor: default;
+}
+
+.ttt-cell.win {
+  background: var(--primary-color);
+  color: var(--bg-color);
 }
 
 .game-stats {
@@ -912,14 +2180,18 @@ nav ul {
   text-align: center;
   padding: 0.75rem 1rem;
   background: var(--surface-color);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   min-width: 100px;
 }
 
 .stat-label {
   display: block;
-  font-size: 0.85rem;
-  opacity: 0.8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
   margin-bottom: 0.25rem;
   color: var(--text-color);
 }
@@ -927,7 +2199,8 @@ nav ul {
 .stat-value {
   display: block;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
   color: var(--primary-color);
 }
 
@@ -1061,6 +2334,300 @@ footer p {
 }
 
 /* ===========================================
+   PROJECT PREVIEW MODAL
+=========================================== */
+.project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.project-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.project-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+.light .project-modal-backdrop {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.project-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  transform: translateY(16px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.project-modal.open .project-modal-content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.project-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.project-modal-close:hover {
+  background: var(--primary-color);
+  color: var(--bg-color);
+  border-color: var(--primary-color);
+  transform: rotate(90deg);
+}
+
+.project-modal-visual {
+  margin-bottom: 1.25rem;
+}
+
+.project-modal-visual .project-visual {
+  margin-bottom: 0;
+}
+
+.project-modal-visual .flow-diagram {
+  padding: 1.5rem;
+}
+
+.project-modal-visual .flow-step {
+  font-size: 0.95rem;
+  padding: 0.65rem 1rem;
+}
+
+.project-modal-visual .chess-board-mini,
+.project-modal-visual .phone-mockup {
+  padding: 1.5rem;
+}
+
+.project-modal-visual .phone-frame {
+  width: 240px;
+}
+
+.gallery-wide-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 16px var(--shadow-color);
+  background: var(--bg-color);
+}
+
+.gallery-wide-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.project-modal-visual .chess-row .sq {
+  font-size: 1.8rem;
+}
+
+.project-modal-content h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.project-modal-content > p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  color: var(--text-color);
+  margin-bottom: 1.25rem;
+}
+
+/* Multi-screen gallery (FitTribe modal) */
+.gallery-screen {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.gallery-screen.gallery-active {
+  opacity: 1;
+}
+
+.gallery-caption {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 0.75rem;
+}
+
+/* Mobile preview shown separately from the desktop gallery cycle above */
+/* A single "phone" slide mixed into a "desktop" gallery — renders as a
+   small centered phone card instead of stretching to fill the wide frame */
+.gallery-inline-phone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: 82%;
+  max-width: 42%;
+  object-fit: contain;
+  border-radius: 14px;
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.35);
+  background: #000;
+}
+
+/* ===========================================
+   CERTIFICATE VIEWER MODAL
+=========================================== */
+.cert-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cert-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cert-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(6px);
+}
+
+.light .cert-modal-backdrop {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.cert-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  transform: translateY(16px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.cert-modal.open .cert-modal-content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.cert-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cert-modal-head h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  line-height: 1.3;
+}
+
+.cert-modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.cert-modal-actions .btn-sm {
+  text-decoration: none;
+}
+
+.cert-modal-close:hover {
+  background: var(--primary-color);
+  color: var(--bg-color);
+  border-color: var(--primary-color);
+}
+
+.cert-modal-frame {
+  flex: 1;
+  min-height: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+}
+
+.cert-modal-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.cert-modal-fallback {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  text-align: center;
+  opacity: 0.75;
+  color: var(--text-color);
+}
+
+.cert-modal-fallback a {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cert-modal-fallback a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================================
    RESPONSIVE DESIGN
 =========================================== */
 
@@ -1089,9 +2656,36 @@ footer p {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .case-study {
+    grid-template-columns: 240px 1fr;
+    padding: 1.5rem;
+  }
+
   .skills-grid-icons {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem 2.5rem;
+  }
+}
+
+/* Wide desktop styles (min-width: 1024px) — the case-study section needs
+   real room for its stats/chips/timeline, so the whole page loosens up */
+@media (min-width: 1024px) {
+  #container {
+    max-width: 960px;
+    padding: 2.5rem;
+  }
+
+  .case-study {
+    grid-template-columns: 340px 1fr;
+    padding: 1.75rem;
+  }
+
+  .case-study-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .skills-grid-icons {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

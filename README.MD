@@ -1,148 +1,136 @@
-<h1 align="center">👨‍💻 Carlos Eduardo - Backend Developer</h1>
+<h1 align="center">👨‍💻 Carlos Eduardo — Backend Developer</h1>
 
 <p align="center">
-  <strong>Portfolio pessoal desenvolvido durante o programa Discover da Rocketseat</strong>
+  <strong>Portfólio pessoal em HTML, CSS e JavaScript puro — sem framework, sem build step.</strong><br>
+  Começou no programa <em>Discover</em> da Rocketseat e cresceu para um site-vitrine com
+  case study interativo, galerias, mini games e carrossel de conquistas.
 </p>
 
 <p align="center">
-  <a href="#-live-demo">Live Demo</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-features">Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-project-structure">Project Structure</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-getting-started">Getting Started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-license">License</a>
+  <a href="#-live">Live</a>&nbsp;·&nbsp;
+  <a href="#-o-que-tem-no-site">O que tem no site</a>&nbsp;·&nbsp;
+  <a href="#%EF%B8%8F-stack">Stack</a>&nbsp;·&nbsp;
+  <a href="#-estrutura">Estrutura</a>&nbsp;·&nbsp;
+  <a href="#-rodando-localmente">Rodando localmente</a>&nbsp;·&nbsp;
+  <a href="#-segurança">Segurança</a>
 </p>
 
 <p align="center">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/carloseduardo-rocha/Projeto-RocketSeat?color=00ffff&style=flat-square">
   <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/carloseduardo-rocha/Projeto-RocketSeat?color=00ffff&style=flat-square">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-49AA26?style=flat-square">
-  <img alt="Status" src="https://img.shields.io/badge/status-active-brightgreen?style=flat-square">
+  <img alt="Status" src="https://img.shields.io/badge/status-ativo-brightgreen?style=flat-square">
+  <img alt="Build" src="https://img.shields.io/badge/build-nenhum%20(vanilla)-blueviolet?style=flat-square">
 </p>
 
 <p align="center">
-  <img alt="Portfolio Preview" src=".github/preview.jpg" width="90%">
+  <img alt="Preview do portfólio" src="assets/og-image.png" width="80%">
 </p>
 
-## 🚀 Live Demo
+## 🔗 Live
 
-🔗 **Acesse o portfolio online:** [https://carloseduardo-rocha.github.io/Projeto-RocketSeat/](https://carloseduardo-rocha.github.io/Projeto-RocketSeat/)
+**https://carloseduardo-rocha.github.io/Projeto-RocketSeat/** (GitHub Pages)
 
-## ✨ Features
+## 🧩 O que tem no site
 
-### 🎨 **Design & UI/UX**
-- ✅ **Dark/Light Theme Toggle** - Switch com animação suave e persistência
-- ✅ **Responsive Design** - Adaptável para mobile, tablet e desktop
-- ✅ **Particle Background** - Sistema de partículas interativas com mouse
-- ✅ **Modern Card Design** - Cards com hover effects e gradientes
+### Perfil
+- Bio curta + bolha de trajetória que abre ao passar o mouse **ou tocar** na foto
+  (com um selo "Minha trajetória" pra deixar claro que tem algo ali).
+- Toggle de tema **dark/light** com transição via View Transitions API e persistência
+  em `localStorage`.
+- Fundo de partículas em `<canvas>` que reage ao mouse e muda de cor com o tema.
+- Barra de progresso de leitura no topo.
 
-### 🎮 **Interactive Elements**
-- ✅ **Snake Mini-Game** - Jogo completo com controles por teclado e mobile
-- ✅ **Theme Persistence** - Salva preferência no localStorage
-- ✅ **Smooth Animations** - Transições e efeitos visuais otimizados
-- ✅ **Interactive Links** - Links com feedback visual
+### GestãoCheck — case study
+Seção dedicada (`.case-study`), não é um card comum:
+- Imagem que funciona como botão: no **hover** avança um mini-carrossel com efeito de
+  pilha de fotos; no **clique** abre o modal grande com a galeria completa (13 telas
+  reais, claro/escuro + 1 mobile).
+- Contadores animados (módulos, testes, perfis, planos), chips de features, chips de
+  roadmap e uma linha do tempo de MVPs.
 
-### 📱 **Responsive Features**
-- ✅ **Mobile Controls** - Controles touch para o jogo Snake
-- ✅ **Adaptive Layout** - Grids que se ajustam automaticamente
-- ✅ **Touch-friendly** - Elementos com tamanhos adequados para touch
+### Outros projetos
+Grid de cards (`.project-card`). Cada card tem um **visual próprio** no topo
+(diagrama de arquitetura, tabuleiro de xadrez, mockup de celular) e abre um **modal
+de preview** com o visual ampliado / galeria de screenshots antes de mandar pro
+GitHub. Projetos: Spring Boot Workshop, FitTribe (mobile), Chess System, AI Agent.
 
-## 🛠️ Technologies
+### Skills
+Ícones (Devicon) com tooltip de nível + descrição + link do projeto. Os "dots" de
+nível são gerados por JS a partir do texto do tooltip.
 
-<div align="center">
-  
-| Frontend | Styling | Interactive |
-|----------|---------|-------------|
-| ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) | ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) |
-| **Canvas API** | **CSS Variables** | **LocalStorage** |
-| **Ionicons** | **Google Fonts** | **Responsive Design** |
+### Conquistas
+Carrossel horizontal (`#achievements-carousel`) com drag + momentum real e destaque
+no card central. Os dados ficam em `ACHIEVEMENTS` no `script.js`, separados por
+categoria (formação / certificados) com um card-capa por seção. Clicar em um
+certificado abre o **PDF dentro do próprio site** (modal com `<iframe>`), sem abrir
+aba nova — com link de fallback caso o navegador não renderize o PDF embutido.
 
-</div>
+### Mini games
+Seletor estilo Steam com 4 jogos, todos em `<canvas>`/DOM puro:
+- **Snake** — motor com interpolação suave via `requestAnimationFrame`.
+- **Jogo da Velha** — vs. CPU (heurística) ou 2 jogadores no mesmo aparelho.
+- **Pong** — IA simples seguindo a bola.
+- **2048** — grid 4×4, com swipe no mobile.
 
-## 📁 Project Structure
+## 🛠️ Stack
+
+| Camada | Ferramentas |
+|--------|-------------|
+| Marcação / estilo | HTML5 semântico, CSS puro com **custom properties** (tema dark/light) |
+| Lógica | JavaScript (ES6+), Canvas API, IntersectionObserver, View Transitions API, `localStorage` |
+| Fontes / ícones | Google Fonts (Inter), Devicon e Ionicons via CDN com **SRI** |
+| Hospedagem | GitHub Pages (site 100% estático, **sem build step**) |
+
+## 📁 Estrutura
 
 ```
 Projeto-RocketSeat/
-├── 📄 index.html          # Main HTML structure
-├── 🎨 style.css           # All styles with CSS variables
-├── ⚡ script.js           # Main JavaScript functionality
-├── 📁 assets/             # Images and resources
-│   ├── avatar.png        # Profile image (dark mode)
-│   ├── avatar-light.png  # Profile image (light mode)
-│   ├── bg-desktop.jpg    # Desktop background
-│   └── bg-mobile.jpg     # Mobile background
-├── 📁 .github/            # GitHub configurations
-│   └── preview.jpg       # Project preview image
-└── 📄 README.md          # This documentation
+├── index.html            # toda a estrutura (hero, links, case study, projetos,
+│                         #   skills, conquistas, mini games, footer, modais)
+├── style.css             # tudo via CSS custom properties, tema dark/light
+├── script.js             # tema, partículas, modal de projeto, galerias,
+│                         #   hover-carousel, conquistas, visualizador de PDF,
+│                         #   4 mini games, scroll reveal, tilt 3D, etc.
+├── robots.txt / sitemap.xml
+├── assets/
+│   ├── avatar*.png, bg-*.jpg, full-moon.png, og-image.png
+│   ├── Curriculo_Carlos_Eduardo.pdf
+│   ├── gestaocheck-*.png      # telas reais do ERP (claro/escuro + mobile)
+│   ├── fittribe-*.png         # telas reais do app
+│   └── certificados/*.pdf     # PDFs linkados nos cards de conquista
+└── CLAUDE.md             # contexto e convenções do projeto
 ```
 
-## 🚀 Getting Started
+## 🚀 Rodando localmente
 
-### 📋 Prerequisites
-- Navegador moderno (Chrome, Firefox, Edge)
-- Git (para clonar o repositório)
+Não tem dependência nem passo de build. Basta servir a pasta:
 
-### ⚡ Quick Start
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/carloseduardo-rocha/Projeto-RocketSeat.git
-   ```
-
-2. **Acesse a pasta do projeto:**
-   ```bash
-   cd Projeto-RocketSeat
-   ```
-
-3. **Abra no navegador:**
-   - Duplo clique no `index.html`
-   - Ou use um live server (VS Code)
-
-### 🎯 Key Features Implementation
-
-#### **Theme System**
-```javascript
-// Toggle between dark/light themes with localStorage
-function toggleMode() {
-  const html = document.documentElement;
-  html.classList.toggle("light");
-  localStorage.setItem("theme", html.classList.contains("light") ? "light" : "dark");
-}
+```bash
+git clone https://github.com/carloseduardo-rocha/Projeto-RocketSeat.git
+cd Projeto-RocketSeat
+py -m http.server 8080
 ```
 
-#### **Snake Game Engine**
-- Grid-based movement (20x20)
-- Score tracking with high score persistence
-- Visual effects on food consumption
-- Mobile touch controls
+Depois abra `http://localhost:8080`. (Também funciona com a extensão Live Server do
+VS Code — a config já está em `.claude/launch.json`.)
 
-#### **Particle System**
-- Interactive particles that react to mouse movement
-- Theme-based color changes
-- Performance optimized with requestAnimationFrame
+## 🔒 Segurança
 
-## 🤝 Contributing
+- **CSP** restritiva via `<meta>` no `<head>` (sem config de servidor no GitHub Pages).
+- **SRI** (`integrity` + `crossorigin`) nos scripts/estilos de CDN.
+- Telefone e e-mail montados por JS em runtime, não em texto puro no HTML (dificulta
+  scraping bobo).
+- `rel="noopener noreferrer"` em todo `target="_blank"`.
+- `.gitignore` protege `.claude/settings.local.json`.
 
-Contribuições são bem-vindas! Siga estes passos:
+## 📄 Sobre
 
-1. Fork o projeto
-2. Crie uma branch (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+Projeto pessoal do **Carlos Eduardo Rocha** — backend developer, cofundador e
+desenvolvedor do [GestãoCheck](https://gestaocheck.tech).
+Sinta-se à vontade pra se inspirar no código.
 
-## 📄 License
-
-Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
-
-## 🙏 Acknowledgments
-
-- Agradecimentos à [Rocketseat](https://www.rocketseat.com.br/) pelo programa Discover
-- Inspiração do design moderno e clean
-- Comunidade de desenvolvimento por compartilhar conhecimento
-
----
-<div align="center">
-  
-⭐️ Se este projeto te ajudou, considere dar uma estrela no repositório!
-
-</div>
+<p align="center">
+  <a href="https://linkedin.com/in/carlos-eduardo-408087230">LinkedIn</a> ·
+  <a href="https://github.com/carloseduardo-rocha">GitHub</a> ·
+  <a href="https://www.instagram.com/cadurochhaa/">Instagram</a>
+</p>

@@ -1,533 +1,746 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ===========================================
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===========================================
+         SECURITY HEADERS (via meta, no server config on GitHub Pages)
+    ============================================ -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://unpkg.com; object-src 'none'; base-uri 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- ===========================================
          SEO META TAGS
     ============================================ -->
-    <title>CaduDev | Backend Developer</title>
-    <meta
-      name="description"
-      content="Portfolio of Carlos Eduardo - Backend Developer specializing in Java, Spring Boot, and REST APIs"
-    />
-    <meta name="author" content="Carlos Eduardo Rocha" />
-    <meta
-      name="keywords"
-      content="backend developer, desenvolvedor backend, java, spring boot, rest api, portfolio"
-    />
+  <title>CaduDev | Backend Developer</title>
+  <meta name="description"
+    content="Portfolio of Carlos Eduardo - Backend Developer specializing in Java, Spring Boot, and REST APIs" />
+  <meta name="author" content="Carlos Eduardo Rocha" />
+  <meta name="keywords" content="backend developer, desenvolvedor backend, java, spring boot, rest api, portfolio" />
 
-    <!-- ===========================================
+  <!-- Open Graph / Twitter Card (link preview on WhatsApp, LinkedIn, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Carlos Eduardo | Backend Developer" />
+  <meta property="og:description"
+    content="Cofundador e desenvolvedor do GestãoCheck (ERP em produção). Java, Python, Spring Boot, Flask, REST APIs." />
+  <meta property="og:image" content="https://carloseduardo-rocha.github.io/Projeto-RocketSeat/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://carloseduardo-rocha.github.io/Projeto-RocketSeat/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Carlos Eduardo | Backend Developer" />
+  <meta name="twitter:description"
+    content="Cofundador e desenvolvedor do GestãoCheck (ERP em produção). Java, Python, Spring Boot, Flask, REST APIs." />
+  <meta name="twitter:image" content="https://carloseduardo-rocha.github.io/Projeto-RocketSeat/assets/og-image.png" />
+
+  <!-- ===========================================
          FAVICON & EXTERNAL RESOURCES
     ============================================ -->
-    <link rel="icon" href="./assets/full-moon.png" type="image/png" />
+  <link rel="icon" href="./assets/full-moon.png" type="image/png" />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
 
-    <!-- Devicon (technology icons for the Skills section) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/devicons/devicon@2.16.0/devicon.min.css"
-    />
+  <!-- Devicon (technology icons for the Skills section) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@2.16.0/devicon.min.css"
+    integrity="sha384-DjehTlU5SubGD1zUGe78SkwLgw+q2y9DXnmy3EaDbXA9nvFMPW3LP5verNrWr9rW" crossorigin="anonymous" />
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="style.css" />
-  </head>
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
 
-  <body>
-    <!-- ===========================================
+  <!-- Structured data (helps search engines / AI recruiting tools parse who this is) -->
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Carlos Eduardo Rocha",
+        "alternateName": "CaduDev",
+        "jobTitle": "Backend Developer",
+        "url": "https://carloseduardo-rocha.github.io/Projeto-RocketSeat/",
+        "image": "https://carloseduardo-rocha.github.io/Projeto-RocketSeat/assets/avatar.png",
+        "sameAs": [
+          "https://github.com/carloseduardo-rocha",
+          "https://linkedin.com/in/carlos-eduardo-408087230",
+          "https://www.instagram.com/cadurochhaa/"
+        ],
+        "knowsAbout": [
+          "Java",
+          "Python",
+          "Spring Boot",
+          "Flask",
+          "REST APIs",
+          "PostgreSQL",
+          "Docker"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "GestãoCheck",
+          "url": "https://gestaocheck.tech"
+        }
+      }
+    </script>
+</head>
+
+<body>
+  <!-- ===========================================
          PARTICLES BACKGROUND (VISUAL EFFECT)
     ============================================ -->
-    <canvas id="particles" aria-hidden="true"></canvas>
+  <canvas id="particles" aria-hidden="true"></canvas>
 
-    <!-- ===========================================
+  <!-- Reading progress bar -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ===========================================
          LOADING SCREEN
     ============================================ -->
-    <div id="loading" class="loading">
-      <div class="spinner"></div>
-      <p>Loading portfolio...</p>
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading portfolio...</p>
+  </div>
+
+  <!-- ===========================================
+         MAIN CONTENT CONTAINER
+    ============================================ -->
+  <main id="container">
+    <!-- ===========================================
+             PROFILE SECTION
+        ============================================ -->
+    <section id="profile" aria-label="Profile information">
+      <div class="profile-container">
+        <div class="avatar-wrap" tabindex="0" role="button" aria-expanded="false"
+          aria-label="Ver a trajetória do Carlos Eduardo">
+          <img src="./assets/avatar.png" alt="Carlos Eduardo - Full Stack Developer" id="profile-img" width="120"
+            height="120" />
+          <span class="avatar-bio-cue" aria-hidden="true">
+            <span class="avatar-bio-cue-icon">i</span>
+            <span class="avatar-bio-cue-label">Minha trajetória</span>
+          </span>
+          <div class="avatar-bio-bubble" role="tooltip">
+            <p>
+              Comecei em suporte técnico e redes, migrei para desenvolvimento
+              backend e hoje sou cofundador e desenvolvedor do
+              <strong>GestãoCheck</strong>, um ERP em produção com clientes
+              reais. No caminho, também venho atuando como tech lead em um
+              fluxo de engenharia assistida por IA, guiando a implementação a
+              partir de documentação técnica estruturada.
+            </p>
+          </div>
+        </div>
+        <div class="profile-info">
+          <h1>Carlos Eduardo</h1>
+          <p class="tagline">Backend Developer</p>
+          <p class="username">@cadurochhaa</p>
+          <p class="bio">Java • Python • Spring Boot • Flask • REST APIs</p>
+          <p class="bio-secondary">Também: Node.js • React</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================
+             THEME TOGGLE SWITCH
+        ============================================ -->
+    <div id="switch">
+      <button id="theme-toggle" aria-label="Toggle theme">
+        <span class="switch-icon">🌙</span>
+      </button>
+      <span class="switch-track"></span>
     </div>
 
     <!-- ===========================================
-         MAIN CONTENT CONTAINER
-    ============================================ -->
-    <main id="container">
-      <!-- ===========================================
-             PROFILE SECTION
-        ============================================ -->
-      <section id="profile" aria-label="Profile information">
-        <div class="profile-container">
-          <img
-            src="./assets/avatar.png"
-            alt="Carlos Eduardo - Full Stack Developer"
-            id="profile-img"
-            width="120"
-            height="120"
-          />
-          <div class="profile-info">
-            <h1>Carlos Eduardo</h1>
-            <p class="tagline">Backend Developer</p>
-            <p class="username">@cadurochhaa</p>
-            <p class="bio">Java • Spring Boot • REST APIs</p>
-            <p class="bio-secondary">Também: Node.js • React • Python</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===========================================
-             THEME TOGGLE SWITCH
-        ============================================ -->
-      <div id="switch">
-        <button id="theme-toggle" aria-label="Toggle theme">
-          <span class="switch-icon">🌙</span>
-        </button>
-        <span class="switch-track"></span>
-      </div>
-
-      <!-- ===========================================
              QUICK LINKS NAVIGATION
         ============================================ -->
-      <nav aria-label="Quick links">
-        <ul>
-          <li>
-            <a
-              href="https://linkedin.com/in/carlos-eduardo-408087230"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <span class="link-icon" aria-hidden="true">👔</span>
-              <div>
-                <strong>LinkedIn</strong>
-                <span>Professional profile</span>
-              </div>
-              <span class="link-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
+    <nav aria-label="Quick links">
+      <ul>
+        <li>
+          <a href="https://linkedin.com/in/carlos-eduardo-408087230" target="_blank" rel="noopener noreferrer"
+            class="link-card">
+            <span class="link-icon" aria-hidden="true">👔</span>
+            <div>
+              <strong>LinkedIn</strong>
+              <span>Professional profile</span>
+            </div>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
 
-          <li>
-            <a
-              href="https://github.com/carloseduardo-rocha"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <span class="link-icon" aria-hidden="true">💻</span>
-              <div>
-                <strong>GitHub</strong>
-                <span>Projects and code</span>
-              </div>
-              <span class="link-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
+        <li>
+          <a href="https://github.com/carloseduardo-rocha" target="_blank" rel="noopener noreferrer" class="link-card">
+            <span class="link-icon" aria-hidden="true">💻</span>
+            <div>
+              <strong>GitHub</strong>
+              <span>Projects and code</span>
+            </div>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
 
-          <li>
-            <a
-              href="./assets/Curriculo-Carlos_Eduardo.pdf"
-              target="_blank"
-              class="link-card"
-            >
-              <span class="link-icon" aria-hidden="true">📄</span>
-              <div>
-                <strong>Currículo</strong>
-                <span>Open PDF</span>
-              </div>
-              <span class="link-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
+        <li>
+          <a href="./assets/Curriculo_Carlos_Eduardo.pdf" target="_blank" rel="noopener noreferrer" class="link-card">
+            <span class="link-icon" aria-hidden="true">📄</span>
+            <div>
+              <strong>Currículo</strong>
+              <span>Open PDF</span>
+            </div>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
 
-          <li>
-            <a
-              href="https://wa.me/5585991799221?text=Hello,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20get%20in%20touch!"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card whatsapp-btn"
-            >
-              <span class="link-icon" aria-hidden="true">💬</span>
-              <div>
-                <strong>Contact me</strong>
-                <span>WhatsApp</span>
-              </div>
-              <span class="link-arrow" aria-hidden="true">💬</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+        <li>
+          <a href="#" data-wa-link target="_blank" rel="noopener noreferrer" class="link-card whatsapp-btn">
+            <span class="link-icon" aria-hidden="true">💬</span>
+            <div>
+              <strong>Contact me</strong>
+              <span>WhatsApp</span>
+            </div>
+            <span class="link-arrow" aria-hidden="true">💬</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
-      <!-- ===========================================
+    <!-- ===========================================
              FEATURED PROJECTS SECTION
         ============================================ -->
-      <section class="projects-section" aria-label="Featured projects">
-        <h2>🚀 Projetos em destaque</h2>
-        <p class="projects-subtitle">
-          Projetos que representam minha evolução como desenvolvedor
-        </p>
-
-        <div class="projects-grid">
-          <!-- Spring Boot Project -->
-          <a
-            class="project-card highlight"
-            href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div class="card-header">
-              <h3>☕ Spring Boot Workshop</h3>
-              <span class="badge">Featured</span>
-            </div>
-            <p>Java • Spring Boot • REST API</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
-
-          <!-- FitTribe Project -->
-          <a
-            class="project-card"
-            href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h3>📱 FitTribe</h3>
-            <p>Node.js • Mobile • API • SQLite</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
-
-          <!-- Chess System Project -->
-          <a
-            class="project-card"
-            href="https://github.com/carloseduardo-rocha/Chess-System-Java"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h3>♟️ Chess System</h3>
-            <p>Java • OOP • Game Logic</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
-
-          <!-- AI Agent Project -->
-          <a
-            class="project-card"
-            href="https://github.com/carloseduardo-rocha/Alura-IA-Agents"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h3>🤖 AI Agent</h3>
-            <p>Python • AI • Automation</p>
-            <p class="project-links">View on GitHub →</p>
-          </a>
-        </div>
-      </section>
+    <section class="projects-section" aria-label="Featured projects">
+      <h2>🚀 Projetos em destaque</h2>
+      <p class="projects-subtitle">
+        Projetos que representam minha evolução como desenvolvedor
+      </p>
 
       <!-- ===========================================
+               GESTÃOCHECK CASE STUDY
+          ============================================ -->
+      <div class="case-study">
+        <button type="button" class="case-study-media" data-gallery-trigger="gestaocheck"
+          aria-label="Passe o mouse para ver mais telas; clique para ampliar">
+          <div class="media-stack" id="gestaocheck-media-stack">
+            <img class="case-study-thumb stack-behind-2" alt="" aria-hidden="true" loading="lazy" />
+            <img class="case-study-thumb stack-behind-1" alt="" aria-hidden="true" loading="lazy" />
+            <img src="./assets/gestaocheck-dashboard.png"
+              alt="Dashboard do GestãoCheck com indicadores de estoque, ocorrências e avarias"
+              class="case-study-thumb tilt-on-hover stack-active" loading="lazy" />
+          </div>
+          <span class="case-study-media-hint">🔍 Passe o mouse • clique pra ampliar</span>
+        </button>
+
+        <div class="case-study-body">
+          <div class="case-study-header">
+            <h3>📊 GestãoCheck</h3>
+            <span class="badge">Em produção</span>
+          </div>
+
+          <p>
+            ERP modular para gestão empresarial (SaaS), em produção real com
+            quase 10 clientes pagantes e crescendo.
+          </p>
+
+          <div class="case-study-more" id="case-study-more">
+            <div class="case-study-more-inner">
+              <p>
+                Fui convidado pelos fundadores a participar da criação e
+                formação da ideia; entrei para fortalecer o time e ajudar a
+                moldá-la em sistema: fiz o levantamento de requisitos, estudei
+                a fundo a área de gestão financeira e operacional (CMV, CMO,
+                CMC) para entender melhor o conceito do sistema, defini a
+                arquitetura e o stack definitivo e escrevi a documentação
+                técnica que guia todo o desenvolvimento.
+              </p>
+              <p>
+                Estoque, CMV, CMO, CMC e as telas seguintes já estão em
+                produção, na versão 1.1.0, estável. No MVP-4 estou construindo
+                uma camada de IA interna, o sistema de DRE completo e um plano
+                de curvas, a primeira sendo a Curva ABC.
+              </p>
+            </div>
+          </div>
+
+          <button type="button" class="case-study-toggle" aria-expanded="false" aria-controls="case-study-more">
+            <span class="case-study-toggle-more">Ler mais</span>
+            <span class="case-study-toggle-less">Ler menos</span>
+            <span class="case-study-toggle-chevron" aria-hidden="true">⌄</span>
+          </button>
+
+          <p class="case-study-stack">Python • Flask • PostgreSQL • Docker • Pytest</p>
+
+          <div class="case-study-stats">
+            <div class="stat-box">
+              <span class="stat-value" data-count="16">0</span>
+              <span class="stat-label">Módulos</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-value" data-count="189">0</span>
+              <span class="stat-label">Testes</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-value" data-count="5">0</span>
+              <span class="stat-label">Perfis</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-value" data-count="3">0</span>
+              <span class="stat-label">Planos</span>
+            </div>
+          </div>
+
+          <div class="case-study-features">
+            <span class="feature-chip">🔐 2FA (TOTP)</span>
+            <span class="feature-chip">🧾 OCR de nota fiscal</span>
+            <span class="feature-chip">🏢 Multi-tenant isolado</span>
+            <span class="feature-chip">📜 Auditoria append-only</span>
+            <span class="feature-chip">💳 Cobrança SaaS (3 fases)</span>
+            <span class="feature-chip">🔔 Notificações em tempo real</span>
+          </div>
+
+          <p class="case-study-roadmap-label">🔜 No roadmap</p>
+          <div class="case-study-features case-study-roadmap">
+            <span class="feature-chip feature-chip-future">🧠 IA interna de apoio ao uso</span>
+            <span class="feature-chip feature-chip-future">📊 DRE completo</span>
+            <span class="feature-chip feature-chip-future">📈 Plano de curvas (Curva ABC)</span>
+            <span class="feature-chip feature-chip-future">📲 App / versão baixável</span>
+          </div>
+
+          <div class="case-study-timeline" aria-label="Linha do tempo de entregas">
+            <div class="timeline-step timeline-done"><span class="timeline-dot"></span>MVP-1</div>
+            <div class="timeline-step timeline-done"><span class="timeline-dot"></span>MVP-2</div>
+            <div class="timeline-step timeline-done"><span class="timeline-dot"></span>MVP-3</div>
+            <div class="timeline-step timeline-current"><span class="timeline-dot"></span>MVP-4</div>
+          </div>
+
+          <div class="case-study-links">
+            <a href="https://gestaocheck.tech" target="_blank" rel="noopener noreferrer"
+              class="project-links case-study-cta">Conhecer o produto →</a>
+            <a href="https://github.com/GestaoCheck/gestao-check-site" target="_blank" rel="noopener noreferrer"
+              class="case-study-cta case-study-cta-secondary">Código do site ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="projects-grid-heading">Outros projetos</h3>
+      <div class="projects-grid">
+        <!-- Spring Boot Project -->
+        <a class="project-card" href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa" target="_blank"
+          rel="noopener noreferrer" data-preview="true">
+          <div class="project-visual flow-diagram tilt-on-hover" aria-hidden="true">
+            <span class="flow-step">Controllers</span>
+            <span class="flow-step">Services</span>
+            <span class="flow-step">Repositories</span>
+            <span class="flow-step">Entities</span>
+            <span class="flow-pulse"></span>
+          </div>
+          <h3>☕ Spring Boot Workshop</h3>
+          <p class="project-desc">
+            API REST completa de e-commerce (usuários, produtos, pedidos,
+            pagamentos), com arquitetura em camadas e tratamento global de
+            exceções.
+          </p>
+          <p>Java • Spring Boot • REST API</p>
+          <p class="project-links">View on GitHub →</p>
+        </a>
+
+        <!-- FitTribe Project -->
+        <a class="project-card" href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile" target="_blank"
+          rel="noopener noreferrer" data-preview="true" data-gallery="fittribe">
+          <div class="project-visual phone-mockup tilt-on-hover" aria-hidden="true">
+            <div class="phone-frame">
+              <img src="./assets/fittribe-boasvindas.png" class="phone-screen phone-screen-a" alt="" loading="lazy" />
+              <img src="./assets/fittribe-login.png" class="phone-screen phone-screen-b" alt="" loading="lazy" />
+            </div>
+          </div>
+          <h3>📱 FitTribe</h3>
+          <p class="project-desc">
+            App mobile para descoberta e organização de eventos esportivos
+            (corrida e ciclismo), com mapa interativo e autenticação.
+          </p>
+          <p>Node.js • Mobile • API • SQLite</p>
+          <p class="project-links">View on GitHub →</p>
+        </a>
+
+        <!-- Chess System Project -->
+        <a class="project-card" href="https://github.com/carloseduardo-rocha/Chess-System-Java" target="_blank"
+          rel="noopener noreferrer" data-preview="true">
+          <div class="project-visual chess-board-mini tilt-on-hover" aria-hidden="true">
+            <div class="chess-row">
+              <span class="sq">♜</span><span class="sq">♞</span><span class="sq">♝</span><span class="sq">♛</span><span
+                class="sq">♚</span><span class="sq">♝</span><span class="sq">♞</span><span class="sq">♜</span>
+            </div>
+            <div class="chess-row">
+              <span class="sq">♟</span><span class="sq">♟</span><span class="sq">♟</span><span class="sq">♟</span><span
+                class="sq">♟</span><span class="sq">♟</span><span class="sq">♟</span><span class="sq">♟</span>
+            </div>
+            <div class="chess-row">
+              <span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span
+                class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span>
+            </div>
+            <div class="chess-row">
+              <span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span
+                class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span>
+            </div>
+            <div class="chess-row">
+              <span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span
+                class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span>
+            </div>
+            <div class="chess-row">
+              <span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span
+                class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span>
+            </div>
+            <div class="chess-row">
+              <span class="sq">♙</span><span class="sq">♙</span><span class="sq">♙</span><span class="sq">♙</span><span
+                class="sq pawn-e2">♙</span><span class="sq">♙</span><span class="sq">♙</span><span class="sq">♙</span>
+            </div>
+            <div class="chess-row">
+              <span class="sq">♖</span><span class="sq">♘</span><span class="sq">♗</span><span class="sq">♕</span><span
+                class="sq">♔</span><span class="sq">♗</span><span class="sq">♘</span><span class="sq">♖</span>
+            </div>
+          </div>
+          <h3>♟️ Chess System</h3>
+          <p class="project-desc">
+            Xadrez completo rodando no console, com todas as regras oficiais
+            — roque, en passant, promoção de peão e xeque-mate.
+          </p>
+          <p>Java • OOP • Game Logic</p>
+          <p class="project-links">View on GitHub →</p>
+        </a>
+
+        <!-- AI Agent Project -->
+        <a class="project-card" href="https://github.com/carloseduardo-rocha/Alura-IA-Agents" target="_blank"
+          rel="noopener noreferrer" data-preview="true">
+          <div class="project-visual flow-diagram tilt-on-hover" aria-hidden="true">
+            <span class="flow-step">📝 Pergunta</span>
+            <span class="flow-step">🎯 Classifica</span>
+            <span class="flow-step">🔍 Busca RAG</span>
+            <span class="flow-step">💡 Resposta</span>
+            <span class="flow-pulse"></span>
+          </div>
+          <h3>🤖 AI Agent</h3>
+          <p class="project-desc">
+            Agente de IA para service desk com triagem automática e RAG —
+            classifica pedidos e responde com base em documentos reais.
+          </p>
+          <p>Python • AI • Automation</p>
+          <p class="project-links">View on GitHub →</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===========================================
              SKILLS SECTION
         ============================================ -->
-      <section class="skills-section" aria-label="Technologies and skills">
-        <h2>🛠️ Skills</h2>
-        <p class="skills-subtitle">
-          Passe o mouse (ou toque) em cada ícone para ver detalhes
-        </p>
+    <section class="skills-section" aria-label="Technologies and skills">
+      <h2>🛠️ Skills</h2>
+      <p class="skills-subtitle">
+        Passe o mouse (ou toque) em cada ícone para ver detalhes
+      </p>
 
-        <div class="skills-grid-icons">
-          <div class="skill-category-block">
-            <h3>Backend</h3>
-            <div class="skill-icons">
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-java-plain colored"></i>
-                <span>Java</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Java</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>Linguagem principal, usada em todos os meus projetos backend.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
+      <div class="skills-grid-icons">
+        <div class="skill-category-block">
+          <h3>Backend</h3>
+          <div class="skill-icons">
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-java-plain colored"></i>
+              <span>Java</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Java</strong>
+                <span class="skill-level">Avançado</span>
+                <p>Linguagem principal, usada em todos os meus projetos backend.</p>
+                <a href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
 
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-spring-plain colored"></i>
-                <span>Spring Boot</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Spring Boot</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>APIs REST em camadas, com JPA/Hibernate e boas práticas.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-spring-plain colored"></i>
+              <span>Spring Boot</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Spring Boot</strong>
+                <span class="skill-level">Avançado</span>
+                <p>APIs REST em camadas, com JPA/Hibernate e boas práticas.</p>
+                <a href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
 
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-nodejs-plain colored"></i>
-                <span>Node.js</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Node.js</strong>
-                  <span class="skill-level">Intermediário</span>
-                  <p>Backend do FitTribe com Express.js e MySQL.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-nodejs-plain colored"></i>
+              <span>Node.js</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Node.js</strong>
+                <span class="skill-level">Intermediário</span>
+                <p>Backend do FitTribe com Express.js e MySQL.</p>
+                <a href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
 
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-python-plain colored"></i>
-                <span>Python</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Python</strong>
-                  <span class="skill-level">Intermediário</span>
-                  <p>Automações e agente de IA com LangChain.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/Alura-IA-Agents"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-python-plain colored"></i>
+              <span>Python</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Python</strong>
+                <span class="skill-level">Avançado</span>
+                <p>
+                  Linguagem principal do GestãoCheck (16 módulos, OCR de
+                  nota fiscal com Tesseract) e do agente de IA com
+                  LangChain.
+                </p>
+                <a href="https://gestaocheck.tech" target="_blank" rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
 
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-git-plain colored"></i>
-                <span>REST API</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>REST API</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>Design e construção de APIs RESTful documentadas e testadas.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-            </div>
-          </div>
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-flask-original colored"></i>
+              <span>Flask</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Flask</strong>
+                <span class="skill-level">Avançado</span>
+                <p>
+                  Backend do GestãoCheck: 16 blueprints documentados via
+                  OpenAPI/Swagger (apiflask), 189 testes automatizados com
+                  Pytest.
+                </p>
+                <a href="https://gestaocheck.tech" target="_blank" rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
 
-          <div class="skill-category-block">
-            <h3>Frontend</h3>
-            <div class="skill-icons">
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-html5-plain colored"></i>
-                <span>HTML/CSS</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>HTML & CSS</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>Base de todo front-end que construo, incluindo este portfólio.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/Projeto-RocketSeat"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-javascript-plain colored"></i>
-                <span>JavaScript</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>JavaScript</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>Interatividade deste site, incluindo o mini-game Snake abaixo.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/Projeto-RocketSeat"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-react-original colored"></i>
-                <span>React</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>React / React Native</strong>
-                  <span class="skill-level">Intermediário</span>
-                  <p>App mobile FitTribe, construído com React Native + Expo.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-typescript-plain colored"></i>
-                <span>TypeScript</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>TypeScript</strong>
-                  <span class="skill-level">Estudando</span>
-                  <p>Aprofundando tipagem estática para próximos projetos.</p>
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <div class="skill-category-block">
-            <h3>Database</h3>
-            <div class="skill-icons">
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-mysql-plain colored"></i>
-                <span>MySQL</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>MySQL</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>Banco principal no Spring Boot Workshop e no FitTribe.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-postgresql-plain colored"></i>
-                <span>PostgreSQL</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>PostgreSQL</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>Integrado via JPA/Hibernate no Spring Boot 4.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-sqlite-plain colored"></i>
-                <span>SQLite</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>SQLite</strong>
-                  <span class="skill-level">Intermediário</span>
-                  <p>Persistência local no backend mobile do FitTribe.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-mongodb-plain colored"></i>
-                <span>MongoDB</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>MongoDB</strong>
-                  <span class="skill-level">Estudando</span>
-                  <p>Conhecimento teórico, próximo passo de estudo prático.</p>
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <div class="skill-category-block">
-            <h3>Tools</h3>
-            <div class="skill-icons">
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-git-plain colored"></i>
-                <span>Git</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Git & GitHub</strong>
-                  <span class="skill-level">Avançado</span>
-                  <p>Versionamento e fluxo de branches em todos os projetos.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver perfil →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-docker-plain colored"></i>
-                <span>Docker</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Docker</strong>
-                  <span class="skill-level">Básico</span>
-                  <p>Containerização de APIs, aplicando curso completo (Udemy).</p>
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-figma-plain colored"></i>
-                <span>Figma</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Figma</strong>
-                  <span class="skill-level">Intermediário</span>
-                  <p>Prototipação de telas usada no design do FitTribe.</p>
-                  <a
-                    href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Ver projeto →</a
-                  >
-                </div>
-              </button>
-
-              <button type="button" class="skill-icon-btn">
-                <i class="devicon-linux-plain"></i>
-                <span>Linux</span>
-                <div class="skill-tooltip" role="tooltip">
-                  <strong>Linux</strong>
-                  <span class="skill-level">Intermediário</span>
-                  <p>Ambiente de desenvolvimento e rotina de suporte técnico N1.</p>
-                </div>
-              </button>
-            </div>
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-git-plain colored"></i>
+              <span>REST API</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>REST API</strong>
+                <span class="skill-level">Avançado</span>
+                <p>Design e construção de APIs RESTful documentadas e testadas.</p>
+                <a href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
           </div>
         </div>
-      </section>
 
-      <!-- ===========================================
-             SNAKE GAME SECTION
-        ============================================ -->
-      <section class="game-section" aria-label="Snake mini-game">
-        <div class="game-header">
-          <h2>🎮 Mini Game — Snake</h2>
-          <div class="game-controls">
-            <button id="restart-game" class="btn-sm" aria-label="Restart game">
-              🔄 Restart
+        <div class="skill-category-block">
+          <h3>Frontend</h3>
+          <div class="skill-icons">
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-html5-plain colored"></i>
+              <span>HTML/CSS</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>HTML & CSS</strong>
+                <span class="skill-level">Avançado</span>
+                <p>Base de todo front-end que construo, incluindo este portfólio.</p>
+                <a href="https://github.com/carloseduardo-rocha/Projeto-RocketSeat" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
             </button>
-            <button id="pause-game" class="btn-sm" aria-label="Pause game">
-              ⏸️ Pause
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-javascript-plain colored"></i>
+              <span>JavaScript</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>JavaScript</strong>
+                <span class="skill-level">Avançado</span>
+                <p>Interatividade deste site, incluindo o mini-game Snake abaixo.</p>
+                <a href="https://github.com/carloseduardo-rocha/Projeto-RocketSeat" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-react-original colored"></i>
+              <span>React</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>React / React Native</strong>
+                <span class="skill-level">Intermediário</span>
+                <p>App mobile FitTribe, construído com React Native + Expo.</p>
+                <a href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-typescript-plain colored"></i>
+              <span>TypeScript</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>TypeScript</strong>
+                <span class="skill-level">Estudando</span>
+                <p>Aprofundando tipagem estática para próximos projetos.</p>
+              </div>
             </button>
           </div>
+        </div>
+
+        <div class="skill-category-block">
+          <h3>Database</h3>
+          <div class="skill-icons">
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-mysql-plain colored"></i>
+              <span>MySQL</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>MySQL</strong>
+                <span class="skill-level">Avançado</span>
+                <p>Banco principal no Spring Boot Workshop e no FitTribe.</p>
+                <a href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-postgresql-plain colored"></i>
+              <span>PostgreSQL</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>PostgreSQL</strong>
+                <span class="skill-level">Avançado</span>
+                <p>
+                  Integrado via JPA/Hibernate no Spring Boot, e banco
+                  isolado por cliente (multi-tenant real) no GestãoCheck.
+                </p>
+                <a href="https://github.com/carloseduardo-rocha/workshop-springboot4-jpa" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-sqlite-plain colored"></i>
+              <span>SQLite</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>SQLite</strong>
+                <span class="skill-level">Intermediário</span>
+                <p>Persistência local no backend mobile do FitTribe.</p>
+                <a href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-mongodb-plain colored"></i>
+              <span>MongoDB</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>MongoDB</strong>
+                <span class="skill-level">Estudando</span>
+                <p>Conhecimento teórico, próximo passo de estudo prático.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="skill-category-block">
+          <h3>Tools</h3>
+          <div class="skill-icons">
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-git-plain colored"></i>
+              <span>Git</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Git & GitHub</strong>
+                <span class="skill-level">Avançado</span>
+                <p>Versionamento e fluxo de branches em todos os projetos.</p>
+                <a href="https://github.com/carloseduardo-rocha" target="_blank" rel="noopener noreferrer">Ver perfil
+                  →</a>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-docker-plain colored"></i>
+              <span>Docker</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Docker</strong>
+                <span class="skill-level">Intermediário</span>
+                <p>
+                  Deploy multi-tenant real do GestãoCheck: Docker +
+                  Traefik com roteamento por cliente, em produção.
+                </p>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <span class="skill-icon-emoji" aria-hidden="true">🤖</span>
+              <span>Engenharia com IA</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Engenharia assistida por IA</strong>
+                <span class="skill-level">Avançado</span>
+                <p>
+                  Conduzo desenvolvimento a partir de documentação técnica
+                  estruturada (o <code>CLAUDE.md</code> do projeto como
+                  fonte de verdade) guiando um agente de IA (Claude Code)
+                  de forma confiável — usado na construção do GestãoCheck.
+                </p>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-figma-plain colored"></i>
+              <span>Figma</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Figma</strong>
+                <span class="skill-level">Intermediário</span>
+                <p>Prototipação de telas usada no design do FitTribe.</p>
+                <a href="https://github.com/carloseduardo-rocha/FitTribe-App_Mobile" target="_blank"
+                  rel="noopener noreferrer">Ver projeto →</a>
+              </div>
+            </button>
+
+            <button type="button" class="skill-icon-btn">
+              <i class="devicon-linux-plain"></i>
+              <span>Linux</span>
+              <div class="skill-tooltip" role="tooltip">
+                <strong>Linux</strong>
+                <span class="skill-level">Intermediário</span>
+                <p>Ambiente de desenvolvimento e rotina de suporte técnico N1.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================
+             ACHIEVEMENTS
+        ============================================ -->
+    <section class="achievements-section" aria-label="Conquistas e certificações">
+      <h2>🏆 Conquistas</h2>
+      <p class="achievements-subtitle">
+        Cursos e formação que sustentam o que eu construo — clique num certificado pra ver o PDF aqui mesmo
+      </p>
+
+      <div class="achievements-groups" id="achievements-groups"></div>
+    </section>
+
+    <!-- ===========================================
+             SNAKE GAME SECTION
+        ============================================ -->
+    <section class="game-section" aria-label="Mini games">
+      <div class="game-header">
+        <h2>🎮 Mini Games</h2>
+      </div>
+
+      <div class="game-selector" role="tablist" aria-label="Escolher jogo">
+        <button type="button" class="game-tile active" data-game="snake" role="tab" aria-selected="true">
+          <span class="game-tile-icon">🐍</span>
+          <span class="game-tile-name">Snake</span>
+        </button>
+        <button type="button" class="game-tile" data-game="tictactoe" role="tab" aria-selected="false">
+          <span class="game-tile-icon">⭕</span>
+          <span class="game-tile-name">Jogo da Velha</span>
+        </button>
+        <button type="button" class="game-tile" data-game="pong" role="tab" aria-selected="false">
+          <span class="game-tile-icon">🏓</span>
+          <span class="game-tile-name">Pong</span>
+        </button>
+        <button type="button" class="game-tile" data-game="flappy" role="tab" aria-selected="false">
+          <span class="game-tile-icon">🐤</span>
+          <span class="game-tile-name">Flappy</span>
+        </button>
+      </div>
+
+      <!-- SNAKE -->
+      <div class="game-panel" data-game-panel="snake">
+        <div class="game-controls">
+          <button id="restart-game" class="btn-sm" aria-label="Restart game">🔄 Restart</button>
+          <button id="pause-game" class="btn-sm" aria-label="Pause game">⏸️ Pause</button>
         </div>
 
         <div class="game-container">
-          <canvas
-            id="snakeGame"
-            width="400"
-            height="400"
-            aria-label="Snake game canvas"
-          >
-            <!-- Fallback text for screen readers and if canvas fails -->
+          <canvas id="snakeGame" width="400" height="400" aria-label="Snake game canvas">
             Snake game - Use arrow keys to play
           </canvas>
 
@@ -544,139 +757,205 @@
 
           <div class="game-instructions">
             <p><strong>Controles:</strong> Setas do teclado</p>
-            <!-- Mobile arrow controls (visible on mobile) -->
             <div class="mobile-controls" aria-label="Mobile game controls">
-              <button
-                class="control-btn"
-                data-direction="up"
-                aria-label="Move up"
-              >
-                ↑
-              </button>
+              <button class="control-btn" data-direction="up" aria-label="Move up">↑</button>
               <div class="row-controls">
-                <button
-                  class="control-btn"
-                  data-direction="left"
-                  aria-label="Move left"
-                >
-                  ←
-                </button>
-                <button
-                  class="control-btn"
-                  data-direction="down"
-                  aria-label="Move down"
-                >
-                  ↓
-                </button>
-                <button
-                  class="control-btn"
-                  data-direction="right"
-                  aria-label="Move right"
-                >
-                  →
-                </button>
+                <button class="control-btn" data-direction="left" aria-label="Move left">←</button>
+                <button class="control-btn" data-direction="down" aria-label="Move down">↓</button>
+                <button class="control-btn" data-direction="right" aria-label="Move right">→</button>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <!-- ===========================================
+      <!-- TIC-TAC-TOE -->
+      <div class="game-panel" data-game-panel="tictactoe" hidden>
+        <div class="game-controls">
+          <button id="restart-ttt" class="btn-sm" aria-label="Restart">🔄 Restart</button>
+          <button id="ttt-mode-toggle" class="btn-sm" aria-label="Alternar modo de jogo">🤖 vs CPU</button>
+        </div>
+
+        <div class="game-container">
+          <div class="ttt-board" id="ttt-board" aria-label="Jogo da velha">
+            <button type="button" class="ttt-cell" data-cell="0" aria-label="Casa 1"></button>
+            <button type="button" class="ttt-cell" data-cell="1" aria-label="Casa 2"></button>
+            <button type="button" class="ttt-cell" data-cell="2" aria-label="Casa 3"></button>
+            <button type="button" class="ttt-cell" data-cell="3" aria-label="Casa 4"></button>
+            <button type="button" class="ttt-cell" data-cell="4" aria-label="Casa 5"></button>
+            <button type="button" class="ttt-cell" data-cell="5" aria-label="Casa 6"></button>
+            <button type="button" class="ttt-cell" data-cell="6" aria-label="Casa 7"></button>
+            <button type="button" class="ttt-cell" data-cell="7" aria-label="Casa 8"></button>
+            <button type="button" class="ttt-cell" data-cell="8" aria-label="Casa 9"></button>
+          </div>
+
+          <div class="game-stats">
+            <div class="stat-box">
+              <span class="stat-label">Placar</span>
+              <span id="ttt-status" class="stat-value">Sua vez</span>
+            </div>
+          </div>
+
+          <div class="game-instructions">
+            <p id="ttt-instructions">Você é <strong>X</strong>, o computador é <strong>O</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PONG -->
+      <div class="game-panel" data-game-panel="pong" hidden>
+        <div class="game-controls">
+          <button id="restart-pong" class="btn-sm" aria-label="Restart pong">🔄 Restart</button>
+          <button id="pause-pong" class="btn-sm" aria-label="Pause pong">⏸️ Pause</button>
+        </div>
+
+        <div class="game-container">
+          <canvas id="pongGame" width="400" height="400" aria-label="Pong game canvas">
+            Pong game - Use as setas ou o mouse para jogar
+          </canvas>
+
+          <div class="game-stats">
+            <div class="stat-box">
+              <span class="stat-label">Você</span>
+              <span id="pong-score-player" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">CPU</span>
+              <span id="pong-score-cpu" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="game-instructions">
+            <p><strong>Controles:</strong> Setas ↑ ↓ ou mouse</p>
+            <div class="mobile-controls" aria-label="Mobile pong controls">
+              <div class="row-controls">
+                <button class="control-btn" data-pong-direction="up" aria-label="Move up">↑</button>
+                <button class="control-btn" data-pong-direction="down" aria-label="Move down">↓</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLAPPY -->
+      <div class="game-panel" data-game-panel="flappy" hidden>
+        <div class="game-controls">
+          <button id="restart-flappy" class="btn-sm" aria-label="Reiniciar Flappy">🔄 Restart</button>
+        </div>
+
+        <div class="game-container">
+          <canvas id="flappyGame" width="400" height="400" aria-label="Flappy game canvas">
+            Flappy - toque, clique ou aperte espaço para voar
+          </canvas>
+
+          <div class="game-stats">
+            <div class="stat-box">
+              <span class="stat-label">Score</span>
+              <span id="flappy-score" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Best</span>
+              <span id="flappy-best" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="game-instructions">
+            <p><strong>Controles:</strong> Toque / clique / espaço pra voar</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================
              SOCIAL MEDIA LINKS
         ============================================ -->
-      <section id="social-links" aria-label="Social media links">
-        <a
-          href="https://github.com/carloseduardo-rocha"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-        >
-          <ion-icon name="logo-github"></ion-icon>
-        </a>
+    <section id="social-links" aria-label="Social media links">
+      <a href="https://github.com/carloseduardo-rocha" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <ion-icon name="logo-github"></ion-icon>
+      </a>
 
-        <a
-          href="https://www.instagram.com/cadurochhaa/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-        >
-          <ion-icon name="logo-instagram"></ion-icon>
-        </a>
+      <a href="https://www.instagram.com/cadurochhaa/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <ion-icon name="logo-instagram"></ion-icon>
+      </a>
 
-        <a
-          href="https://linkedin.com/in/carlos-eduardo-408087230"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-        >
-          <ion-icon name="logo-linkedin"></ion-icon>
-        </a>
+      <a href="https://linkedin.com/in/carlos-eduardo-408087230" target="_blank" rel="noopener noreferrer"
+        aria-label="LinkedIn">
+        <ion-icon name="logo-linkedin"></ion-icon>
+      </a>
 
-        <a
-          href="https://mail.google.com/mail/?view=cm&to=cadurocha39@gmail.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Send email to cadurocha39@gmail.com"
-        >
-          <ion-icon name="mail-outline"></ion-icon>
-        </a>
-      </section>
+      <a href="#" data-email-link target="_blank" rel="noopener noreferrer" aria-label="Send email">
+        <ion-icon name="mail-outline"></ion-icon>
+      </a>
+    </section>
 
-      <!-- ===========================================
+    <!-- ===========================================
              FOOTER
         ============================================ -->
-      <footer>
-        <p>
-          👨‍💻 Feito por Carlos Eduardo • Última atualização:
-          <span id="current-year"></span>
-        </p>
-        <p class="footer-links">
-          <span id="theme-info">Theme: Dark</span> •
-          <a
-            href="https://github.com/carloseduardo-rocha/Projeto-RocketSeat/tree/main"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Ver código-fonte</a
-          >
-        </p>
-      </footer>
-    </main>
+    <footer>
+      <p>
+        👨‍💻 Feito por Carlos Eduardo • Última atualização:
+        <span id="current-year"></span>
+      </p>
+      <p class="footer-links">
+        <span id="theme-info">Theme: Dark</span> •
+        <a href="https://github.com/carloseduardo-rocha/Projeto-RocketSeat/tree/main" target="_blank"
+          rel="noopener noreferrer">Ver código-fonte</a>
+      </p>
+    </footer>
+  </main>
 
-    <!-- ===========================================
+  <!-- ===========================================
+         PROJECT PREVIEW MODAL
+    ============================================ -->
+  <div class="project-modal" id="project-modal" aria-hidden="true">
+    <div class="project-modal-backdrop" data-modal-close></div>
+    <div class="project-modal-content" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+      <button type="button" class="project-modal-close" data-modal-close aria-label="Fechar">✕</button>
+      <div class="project-modal-visual" id="project-modal-visual"></div>
+      <h3 id="project-modal-title"></h3>
+      <p id="project-modal-desc"></p>
+      <p id="project-modal-stack" class="case-study-stack"></p>
+      <a id="project-modal-cta" class="project-links case-study-cta" href="#" target="_blank"
+        rel="noopener noreferrer"></a>
+    </div>
+  </div>
+
+  <!-- ===========================================
+         CERTIFICATE VIEWER MODAL
+    ============================================ -->
+  <div class="cert-modal" id="cert-modal" aria-hidden="true">
+    <div class="cert-modal-backdrop" data-cert-close></div>
+    <div class="cert-modal-content" role="dialog" aria-modal="true" aria-labelledby="cert-modal-title">
+      <div class="cert-modal-head">
+        <h3 id="cert-modal-title">Certificado</h3>
+        <div class="cert-modal-actions">
+          <a id="cert-modal-open" class="btn-sm" href="#" target="_blank" rel="noopener noreferrer">Abrir ↗</a>
+          <button type="button" class="cert-modal-close btn-sm" data-cert-close aria-label="Fechar">✕</button>
+        </div>
+      </div>
+      <div class="cert-modal-frame">
+        <iframe id="cert-modal-iframe" title="Visualização do certificado" src="about:blank"></iframe>
+      </div>
+      <p class="cert-modal-fallback">
+        O PDF não abriu aqui?
+        <a id="cert-modal-fallback-link" href="#" target="_blank" rel="noopener noreferrer">Abrir em nova aba ↗</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ===========================================
          EXTERNAL SCRIPTS
     ============================================ -->
-    <!-- Ionicons Library -->
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+  <!-- Ionicons Library -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    integrity="sha384-xyQ/Vpt1cq1pdPYlRaT/QkcSj2vrYyWI3WOhxGBzqnP1vgvsS2yrhWXe3/wIoCr5"
+    crossorigin="anonymous"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    integrity="sha384-KAUcUASKfGZ0sxENVFRiH12jtpvd9SsVpgzvYdvv8ZMLqB99G3gX3DAts418wzIC"
+    crossorigin="anonymous"></script>
 
-    <!-- Main JavaScript -->
-    <script src="./script.js"></script>
+  <!-- Main JavaScript -->
+  <script src="./script.js"></script>
+</body>
 
-    <!-- ===========================================
-         INITIALIZATION SCRIPT
-    ============================================ -->
-    <script>
-      // Initialize loading screen and current year
-      window.addEventListener("load", () => {
-        // Loading screen with fade out
-        const loading = document.getElementById("loading")
-        setTimeout(() => {
-          loading.classList.add("hidden")
-          setTimeout(() => {
-            loading.style.display = "none"
-          }, 300)
-        }, 500)
-
-        // Set current year in footer
-        document.getElementById("current-year").textContent =
-          new Date().getFullYear()
-      })
-    </script>
-  </body>
 </html>
