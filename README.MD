@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-  <img alt="Preview do portfólio" src="assets/og-image.png" width="80%">
+  <img alt="Preview do portfólio" src="assets/brand/og-image.png" width="80%">
 </p>
 
 ## 🔗 Live
@@ -93,11 +93,12 @@ Projeto-RocketSeat/
 │                         #   4 mini games, scroll reveal, tilt 3D, etc.
 ├── robots.txt / sitemap.xml
 ├── assets/
-│   ├── avatar*.png, bg-*.jpg, full-moon.png, og-image.png
-│   ├── Curriculo_Carlos_Eduardo.pdf
-│   ├── gestaocheck-*.png      # telas reais do ERP (claro/escuro + mobile)
-│   ├── fittribe-*.png         # telas reais do app
-│   └── certificados/*.pdf     # PDFs linkados nos cards de conquista
+│   ├── brand/                 # avatar (claro/escuro), favicon, og-image
+│   ├── backgrounds/           # bg-{desktop,mobile}[-light].jpg
+│   ├── gestaocheck/           # telas reais do ERP (claro/escuro + mobile)
+│   ├── fittribe/              # telas reais do app
+│   ├── certificados/          # PDFs linkados nos cards de conquista
+│   └── Curriculo_Carlos_Eduardo.pdf
 └── CLAUDE.md             # contexto e convenções do projeto
 ```
 

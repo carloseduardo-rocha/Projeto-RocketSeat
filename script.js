@@ -168,7 +168,7 @@ function applyThemeToggle() {
 
   // Apply light theme settings
   if (html.classList.contains("light")) {
-    img.src = "./assets/avatar-light.png"
+    img.src = "./assets/brand/avatar-light.png"
     targetParticleColor = "rgba(0, 0, 0, 0.4)"
     localStorage.setItem("theme", "light")
     if (switchIcon) switchIcon.textContent = "☀️"
@@ -176,7 +176,7 @@ function applyThemeToggle() {
   }
   // Apply dark theme settings
   else {
-    img.src = "./assets/avatar.png"
+    img.src = "./assets/brand/avatar.png"
     targetParticleColor = "rgba(0, 255, 255, 0.7)"
     localStorage.setItem("theme", "dark")
     if (switchIcon) switchIcon.textContent = "🌙"
@@ -203,7 +203,7 @@ function initTheme() {
 
   if (savedTheme === "light") {
     html.classList.add("light")
-    if (img) img.src = "./assets/avatar-light.png"
+    if (img) img.src = "./assets/brand/avatar-light.png"
     targetParticleColor = "rgba(0, 0, 0, 0.4)"
     if (switchIcon) switchIcon.textContent = "☀️"
     if (themeInfo) themeInfo.textContent = "Theme: Light"
@@ -1561,31 +1561,31 @@ const PROJECT_GALLERIES = {
   fittribe: {
     variant: "phone",
     images: [
-      { src: "./assets/fittribe-boasvindas.png", caption: "Boas-vindas" },
-      { src: "./assets/fittribe-onboarding-mapa.png", caption: "Onboarding — Rotas" },
-      { src: "./assets/fittribe-onboarding-clima.png", caption: "Onboarding — Clima" },
-      { src: "./assets/fittribe-onboarding-saude.png", caption: "Onboarding — Saúde" },
-      { src: "./assets/fittribe-login.png", caption: "Login" },
-      { src: "./assets/fittribe-cadastro.png", caption: "Cadastro" },
-      { src: "./assets/fittribe-sucesso.png", caption: "Confirmação" },
+      { src: "./assets/fittribe/boasvindas.png", caption: "Boas-vindas" },
+      { src: "./assets/fittribe/onboarding-mapa.png", caption: "Onboarding — Rotas" },
+      { src: "./assets/fittribe/onboarding-clima.png", caption: "Onboarding — Clima" },
+      { src: "./assets/fittribe/onboarding-saude.png", caption: "Onboarding — Saúde" },
+      { src: "./assets/fittribe/login.png", caption: "Login" },
+      { src: "./assets/fittribe/cadastro.png", caption: "Cadastro" },
+      { src: "./assets/fittribe/sucesso.png", caption: "Confirmação" },
     ],
   },
   gestaocheck: {
     variant: "desktop",
     images: [
-      { src: "./assets/gestaocheck-inicio-dark.png", caption: "Início — escuro" },
-      { src: "./assets/gestaocheck-inicio-light.png", caption: "Início — claro" },
-      { src: "./assets/gestaocheck-mobile-inicio.png", caption: "📱 100% adaptado pro mobile", variant: "phone" },
-      { src: "./assets/gestaocheck-estoque-dark.png", caption: "Estoque — escuro" },
-      { src: "./assets/gestaocheck-estoque-light.png", caption: "Estoque — claro" },
-      { src: "./assets/gestaocheck-cmv-dark.png", caption: "CMV — escuro" },
-      { src: "./assets/gestaocheck-cmv-light.png", caption: "CMV — claro" },
-      { src: "./assets/gestaocheck-cmo-dark.png", caption: "CMO — escuro" },
-      { src: "./assets/gestaocheck-cmo-light.png", caption: "CMO — claro" },
-      { src: "./assets/gestaocheck-cmc-dark.png", caption: "CMC — escuro" },
-      { src: "./assets/gestaocheck-cmc-light.png", caption: "CMC — claro" },
-      { src: "./assets/gestaocheck-relatorio-dark.png", caption: "Relatório geral — escuro" },
-      { src: "./assets/gestaocheck-relatorio-light.png", caption: "Relatório geral — claro" },
+      { src: "./assets/gestaocheck/inicio-dark.png", caption: "Início — escuro" },
+      { src: "./assets/gestaocheck/inicio-light.png", caption: "Início — claro" },
+      { src: "./assets/gestaocheck/mobile-inicio.png", caption: "📱 100% adaptado pro mobile", variant: "phone" },
+      { src: "./assets/gestaocheck/estoque-dark.png", caption: "Estoque — escuro" },
+      { src: "./assets/gestaocheck/estoque-light.png", caption: "Estoque — claro" },
+      { src: "./assets/gestaocheck/cmv-dark.png", caption: "CMV — escuro" },
+      { src: "./assets/gestaocheck/cmv-light.png", caption: "CMV — claro" },
+      { src: "./assets/gestaocheck/cmo-dark.png", caption: "CMO — escuro" },
+      { src: "./assets/gestaocheck/cmo-light.png", caption: "CMO — claro" },
+      { src: "./assets/gestaocheck/cmc-dark.png", caption: "CMC — escuro" },
+      { src: "./assets/gestaocheck/cmc-light.png", caption: "CMC — claro" },
+      { src: "./assets/gestaocheck/relatorio-dark.png", caption: "Relatório geral — escuro" },
+      { src: "./assets/gestaocheck/relatorio-light.png", caption: "Relatório geral — claro" },
     ],
   },
 }

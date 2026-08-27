@@ -31,13 +31,17 @@ script.js              # toda a lógica: tema, partículas, modal de projeto,
                         #   scroll reveal, tilt 3D, etc.
 robots.txt / sitemap.xml
 assets/
-  avatar.png, avatar-light.png, full-moon.png, bg-*.jpg   # originais do site
-  Curriculo-Carlos_Eduardo.pdf                             # currículo atual
-  og-image.png                                             # Open Graph (gerada via PowerShell/System.Drawing)
-  gestaocheck-*.png                                        # 13 telas reais (claro/escuro), já cortadas (sidebar removida)
-  fittribe-*.png                                           # 7 telas reais do app (mockups pretos + claros)
-  certificados/*.pdf                                       # PDFs reais linkados nos cards de conquista
+  brand/         # avatar.png, avatar-light.png, full-moon.png (favicon), og-image.png
+  backgrounds/   # bg-{desktop,mobile}[-light].jpg
+  gestaocheck/   # telas reais do ERP (claro/escuro + mobile), já cortadas (sidebar removida)
+  fittribe/      # telas reais do app (mockups pretos + claros)
+  certificados/  # *.pdf reais linkados nos cards de conquista
+  Curriculo_Carlos_Eduardo.pdf                             # currículo atual (fica na raiz de assets/)
 ```
+
+As imagens de `gestaocheck/` e `fittribe/` **não** têm mais o prefixo do
+nome da pasta (ex: `assets/gestaocheck/inicio-dark.png`, não
+`gestaocheck-inicio-dark.png`). og-image gerada via PowerShell/System.Drawing.
 
 Abrir com Live Server ou `python -m http.server` (config já em
 `.claude/launch.json`, nome `static-site`, porta 8080). Fontes via Google

@@ -32,7 +32,7 @@ footer p, .projects-subtitle, .game-instructions {
 :root {
   --text-color: #f1f5f9;
   --bg-color: #0b1220;
-  --bg-url: url(./assets/bg-mobile.jpg);
+  --bg-url: url(./assets/backgrounds/bg-mobile.jpg);
   --primary-color: #00ffff;
   --secondary-color: #cbd5e1;
   --accent-color: #ff4757;
@@ -59,7 +59,7 @@ footer p, .projects-subtitle, .game-instructions {
 .light {
   --text-color: #1e293b;
   --bg-color: #dbe1e8;
-  --bg-url: url(./assets/bg-mobile-light.jpg);
+  --bg-url: url(./assets/backgrounds/bg-mobile-light.jpg);
   --primary-color: #2563eb;
   --secondary-color: #1f2937;
   --accent-color: #ef4444;
@@ -2634,11 +2634,11 @@ footer p {
 /* Desktop styles (min-width: 700px) */
 @media (min-width: 700px) {
   :root {
-    --bg-url: url(./assets/bg-desktop.jpg);
+    --bg-url: url(./assets/backgrounds/bg-desktop.jpg);
   }
 
   .light {
-    --bg-url: url(./assets/bg-desktop-light.jpg);
+    --bg-url: url(./assets/backgrounds/bg-desktop-light.jpg);
   }
 
   #container {
