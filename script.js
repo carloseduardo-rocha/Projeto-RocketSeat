@@ -631,6 +631,14 @@ const ACHIEVEMENTS = [
   },
   {
     category: "certificado",
+    icon: "⚙️",
+    title: "Automação Inteligente com N8N",
+    issuer: "Udemy (André Iacono) · Ago 2026 · 2,5h",
+    description: "Workflows de automação low-code integrando APIs, webhooks e IA no n8n.",
+    pdf: "./assets/certificados/n8n-automacao-udemy.pdf",
+  },
+  {
+    category: "certificado",
     icon: "🚀",
     title: "Discover",
     issuer: "Rocketseat · Abr 2025 · 12h",
