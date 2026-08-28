@@ -1273,11 +1273,12 @@ const flappyCtx = flappyCanvas ? flappyCanvas.getContext("2d") : null
 
 const FLAPPY_GRAVITY = 0.45
 const FLAPPY_FLAP = -7.2
-const FLAPPY_PIPE_W = 52
-const FLAPPY_GAP = 140
+const FLAPPY_PIPE_W = 60
+const FLAPPY_GAP = 150
 const FLAPPY_SPEED = 2.4
-const FLAPPY_BIRD_R = 12
-const FLAPPY_SPAWN_GAP = 190 // px of travel between pipes
+const FLAPPY_BIRD_R = 16 // visual size of the Java cup
+const FLAPPY_HIT_R = 11 // collision radius (a touch forgiving)
+const FLAPPY_SPAWN_GAP = 200 // px of travel between pipes
 
 const flappyState = {
   birdY: 0,
@@ -1323,7 +1324,12 @@ function flappySpawnPipe() {
   const margin = 50
   const gapY =
     margin + Math.random() * (flappyCanvas.height - FLAPPY_GAP - margin * 2)
-  flappyState.pipes.push({ x: flappyCanvas.width, gapY, passed: false })
+  flappyState.pipes.push({
+    x: flappyCanvas.width,
+    gapY,
+    passed: false,
+    seed: Math.random() * 1000, // stable phase for the neural pattern
+  })
 }
 
 // One flap — also doubles as "start" from idle and "retry" from game over
@@ -1353,12 +1359,12 @@ function flappyUpdate() {
   flappyState.birdV += FLAPPY_GRAVITY
   flappyState.birdY += flappyState.birdV
 
-  if (flappyState.birdY < FLAPPY_BIRD_R) {
-    flappyState.birdY = FLAPPY_BIRD_R
+  if (flappyState.birdY < FLAPPY_HIT_R) {
+    flappyState.birdY = FLAPPY_HIT_R
     flappyState.birdV = 0
   }
-  if (flappyState.birdY > h - FLAPPY_BIRD_R) {
-    flappyState.birdY = h - FLAPPY_BIRD_R
+  if (flappyState.birdY > h - FLAPPY_HIT_R) {
+    flappyState.birdY = h - FLAPPY_HIT_R
     flappyGameOver()
     return
   }
@@ -1379,70 +1385,210 @@ function flappyUpdate() {
     }
 
     const withinX =
-      birdX + FLAPPY_BIRD_R > p.x && birdX - FLAPPY_BIRD_R < p.x + FLAPPY_PIPE_W
+      birdX + FLAPPY_HIT_R > p.x && birdX - FLAPPY_HIT_R < p.x + FLAPPY_PIPE_W
     const throughGap =
-      flappyState.birdY - FLAPPY_BIRD_R > p.gapY &&
-      flappyState.birdY + FLAPPY_BIRD_R < p.gapY + FLAPPY_GAP
+      flappyState.birdY - FLAPPY_HIT_R > p.gapY &&
+      flappyState.birdY + FLAPPY_HIT_R < p.gapY + FLAPPY_GAP
     if (withinX && !throughGap) flappyGameOver()
   })
 
   flappyState.pipes = flappyState.pipes.filter((p) => p.x + FLAPPY_PIPE_W > -10)
 }
 
+// The player is the classic red Java coffee cup; the obstacles are "AI
+// sentinels" — dark monoliths with a neural mesh and a robot face guarding
+// each gap. Piadinha: hoje tudo virou IA e o dev Java tem que desviar. :)
+
+// Classic Java-logo coffee cup (red cup + blue saucer + steam), centered at 0,0
+function flappyDrawJava(ctx, r) {
+  const cupW = r * 1.8
+  const cupH = r * 1.7
+
+  // steam
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.75)"
+  ctx.lineWidth = 2
+  ctx.lineCap = "round"
+  for (const dx of [-r * 0.4, r * 0.35]) {
+    ctx.beginPath()
+    ctx.moveTo(dx, -cupH * 0.55)
+    ctx.bezierCurveTo(
+      dx - r * 0.5, -cupH * 0.9,
+      dx + r * 0.5, -cupH * 1.15,
+      dx, -cupH * 1.5
+    )
+    ctx.stroke()
+  }
+
+  // saucer
+  ctx.fillStyle = "#4e7ca8"
+  ctx.beginPath()
+  ctx.ellipse(0, cupH * 0.5, cupW * 0.95, r * 0.42, 0, 0, Math.PI * 2)
+  ctx.fill()
+
+  // cup body (red-orange)
+  const grad = ctx.createLinearGradient(0, -cupH * 0.5, 0, cupH * 0.5)
+  grad.addColorStop(0, "#f0663c")
+  grad.addColorStop(1, "#d33a24")
+  ctx.fillStyle = grad
+  ctx.beginPath()
+  ctx.roundRect(-cupW / 2, -cupH * 0.45, cupW, cupH * 0.9, 5)
+  ctx.fill()
+
+  // rim
+  ctx.fillStyle = "#ffd9c9"
+  ctx.beginPath()
+  ctx.ellipse(0, -cupH * 0.45, cupW / 2, r * 0.22, 0, 0, Math.PI * 2)
+  ctx.fill()
+
+  // handle
+  ctx.strokeStyle = "#d33a24"
+  ctx.lineWidth = 3
+  ctx.beginPath()
+  ctx.arc(cupW / 2 + 1, 0, r * 0.55, -Math.PI / 2, Math.PI / 2)
+  ctx.stroke()
+}
+
+// One "AI sentinel" slab: circuit-board monolith + robot face at the gap edge
+function flappyDrawAI(ctx, x, y, height, seed, faceY, faceDir, glow) {
+  if (height <= 0) return
+  const w = FLAPPY_PIPE_W
+  const cx = x + w / 2
+
+  // monolith body — gradient so it clearly reads against the background
+  const g = ctx.createLinearGradient(x, 0, x + w, 0)
+  g.addColorStop(0, "#1a2540")
+  g.addColorStop(0.5, "#243356")
+  g.addColorStop(1, "#1a2540")
+  ctx.fillStyle = g
+  ctx.beginPath()
+  ctx.roundRect(x, y, w, height, 5)
+  ctx.fill()
+  ctx.strokeStyle = glow
+  ctx.lineWidth = 2
+  ctx.globalAlpha = 0.8
+  ctx.stroke()
+  ctx.globalAlpha = 1
+
+  // circuit-board traces + node dots down the slab
+  ctx.save()
+  ctx.beginPath()
+  ctx.roundRect(x, y, w, height, 5)
+  ctx.clip()
+  ctx.strokeStyle = glow
+  ctx.fillStyle = glow
+  const lanes = [x + w * 0.3, x + w * 0.5, x + w * 0.7]
+  for (let i = 0; i < 3; i++) {
+    ctx.globalAlpha = 0.35
+    ctx.lineWidth = 1.5
+    ctx.beginPath()
+    ctx.moveTo(lanes[i], y - 4)
+    ctx.lineTo(lanes[i], y + height + 4)
+    ctx.stroke()
+  }
+  const step = 26
+  for (let row = 0; row * step < height + step; row++) {
+    const ny = y + 12 + row * step + (seed % step)
+    const lane = (row + Math.floor(seed)) % 3
+    const other = (lane + 1 + (row % 2)) % 3
+    ctx.globalAlpha = 0.4
+    ctx.lineWidth = 1.5
+    ctx.beginPath()
+    ctx.moveTo(lanes[lane], ny)
+    ctx.lineTo(lanes[other], ny + step * 0.5)
+    ctx.stroke()
+    ctx.globalAlpha = 0.95
+    ctx.beginPath()
+    ctx.arc(lanes[lane], ny, 2.4, 0, Math.PI * 2)
+    ctx.fill()
+  }
+  ctx.restore()
+  ctx.globalAlpha = 1
+
+  // bright accent bar on the gap edge
+  const edgeY = faceDir === 1 ? y + height - 4 : y
+  ctx.fillStyle = glow
+  ctx.fillRect(x - 3, edgeY, w + 6, 4)
+
+  // robot face guarding the gap
+  const s = 13
+  ctx.fillStyle = "#0f1830"
+  ctx.strokeStyle = glow
+  ctx.lineWidth = 1.5
+  ctx.beginPath()
+  ctx.roundRect(cx - s, faceY - s * 0.8, s * 2, s * 1.6, 4)
+  ctx.fill()
+  ctx.stroke()
+  // antenna (points into the slab, away from the gap)
+  ctx.beginPath()
+  ctx.moveTo(cx, faceY - faceDir * s * 0.8)
+  ctx.lineTo(cx, faceY - faceDir * s * 1.5)
+  ctx.stroke()
+  ctx.fillStyle = glow
+  ctx.beginPath()
+  ctx.arc(cx, faceY - faceDir * s * 1.5, 2.2, 0, Math.PI * 2)
+  ctx.fill()
+  // glowing eyes
+  ctx.shadowColor = glow
+  ctx.shadowBlur = 8
+  ctx.beginPath()
+  ctx.arc(cx - s * 0.4, faceY - s * 0.05, s * 0.22, 0, Math.PI * 2)
+  ctx.arc(cx + s * 0.4, faceY - s * 0.05, s * 0.22, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.shadowBlur = 0
+  // mouth grid
+  ctx.strokeStyle = glow
+  ctx.lineWidth = 1.2
+  ctx.beginPath()
+  ctx.moveTo(cx - s * 0.45, faceY + s * 0.45)
+  ctx.lineTo(cx + s * 0.45, faceY + s * 0.45)
+  ctx.stroke()
+}
+
 function flappyDraw() {
   if (!flappyCtx) return
+  const ctx = flappyCtx
   const w = flappyCanvas.width
   const h = flappyCanvas.height
   const theme = currentSnakeTheme
+  const glow = theme.head
 
-  flappyCtx.fillStyle = theme.bg
-  flappyCtx.fillRect(0, 0, w, h)
+  ctx.fillStyle = theme.bg
+  ctx.fillRect(0, 0, w, h)
 
   flappyState.pipes.forEach((p) => {
-    flappyCtx.fillStyle = theme.head
-    flappyCtx.fillRect(p.x, 0, FLAPPY_PIPE_W, p.gapY)
-    flappyCtx.fillRect(p.x, p.gapY + FLAPPY_GAP, FLAPPY_PIPE_W, h - (p.gapY + FLAPPY_GAP))
-    flappyCtx.fillStyle = theme.border
-    flappyCtx.fillRect(p.x - 3, p.gapY - 10, FLAPPY_PIPE_W + 6, 10)
-    flappyCtx.fillRect(p.x - 3, p.gapY + FLAPPY_GAP, FLAPPY_PIPE_W + 6, 10)
+    const bottomStart = p.gapY + FLAPPY_GAP
+    flappyDrawAI(ctx, p.x, 0, p.gapY, p.seed, p.gapY - 14, 1, glow)
+    flappyDrawAI(ctx, p.x, bottomStart, h - bottomStart, p.seed + 1, bottomStart + 14, -1, glow)
   })
 
-  // Bird
+  // Java cup
   const birdX = w * 0.28
-  flappyCtx.save()
-  flappyCtx.translate(birdX, flappyState.birdY)
-  flappyCtx.rotate(Math.max(-0.5, Math.min(1.1, flappyState.birdV / 12)))
-  flappyCtx.fillStyle = theme.food
-  flappyCtx.beginPath()
-  flappyCtx.arc(0, 0, FLAPPY_BIRD_R, 0, Math.PI * 2)
-  flappyCtx.fill()
-  flappyCtx.fillStyle = "#fff"
-  flappyCtx.beginPath()
-  flappyCtx.arc(FLAPPY_BIRD_R * 0.35, -FLAPPY_BIRD_R * 0.3, 3.2, 0, Math.PI * 2)
-  flappyCtx.fill()
-  flappyCtx.fillStyle = "#000"
-  flappyCtx.beginPath()
-  flappyCtx.arc(FLAPPY_BIRD_R * 0.5, -FLAPPY_BIRD_R * 0.3, 1.5, 0, Math.PI * 2)
-  flappyCtx.fill()
-  flappyCtx.restore()
+  ctx.save()
+  ctx.translate(birdX, flappyState.birdY)
+  ctx.rotate(Math.max(-0.25, Math.min(0.5, flappyState.birdV / 22)))
+  flappyDrawJava(ctx, FLAPPY_BIRD_R)
+  ctx.restore()
 
-  flappyCtx.strokeStyle = theme.border
-  flappyCtx.lineWidth = 2
-  flappyCtx.strokeRect(0, 0, w, h)
+  ctx.strokeStyle = theme.border
+  ctx.lineWidth = 2
+  ctx.strokeRect(0, 0, w, h)
 
-  flappyCtx.fillStyle = theme.text
-  flappyCtx.textAlign = "center"
+  ctx.fillStyle = theme.text
+  ctx.textAlign = "center"
+  ctx.textBaseline = "alphabetic"
   if (flappyState.phase === "running") {
-    flappyCtx.font = "bold 34px Inter"
-    flappyCtx.fillText(flappyState.score, w / 2, 54)
+    ctx.font = "bold 34px Inter"
+    ctx.fillText(flappyState.score, w / 2, 54)
   } else if (flappyState.phase === "idle") {
-    flappyCtx.font = "16px Inter"
-    flappyCtx.fillText("Toque / espaço pra voar", w / 2, h / 2 - 34)
+    ctx.font = "bold 18px Inter"
+    ctx.fillText("Java  vs  IA", w / 2, h / 2 - 42)
+    ctx.font = "13px Inter"
+    ctx.fillText("toque / espaço pra pular", w / 2, h / 2 - 18)
   } else {
-    flappyCtx.font = "bold 24px Inter"
-    flappyCtx.fillText("Game Over", w / 2, h / 2 - 12)
-    flappyCtx.font = "14px Inter"
-    flappyCtx.fillText("Toque pra jogar de novo", w / 2, h / 2 + 14)
+    ctx.font = "bold 22px Inter"
+    ctx.fillText("Substituído por IA", w / 2, h / 2 - 10)
+    ctx.font = "13px Inter"
+    ctx.fillText("toque pra tentar de novo", w / 2, h / 2 + 16)
   }
 }
 
